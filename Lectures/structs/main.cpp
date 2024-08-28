@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
@@ -10,22 +11,32 @@ struct Triangle
     float area;
 };
 
-void promptSides(Triangle*[], int);
-void printSides(Triangle*[], int);
-void calcArea(Triangle*[], int);
+void promptSides(Triangle *[], int, char);
+void printSides(Triangle *[], int);
+void calcArea(Triangle *[], int);
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     int arrSize = 3;
-    Triangle* triangles[arrSize];
+    Triangle *triangles[arrSize];
+    char promptOrFile;
 
-    promptSides(triangles, arrSize);
+    if (argc >= 2 && (string)argv[1] == "P")
+    {
+        promptOrFile = 'P';
+    }
+    else
+    {
+        promptOrFile = 'F';
+    }
+
+    promptSides(triangles, arrSize, promptOrFile);
 
     calcArea(triangles, arrSize);
 
     printSides(triangles, arrSize);
 
-    for(int i = 0; i < arrSize; i++)
+    for (int i = 0; i < arrSize; i++)
     {
         delete triangles[i];
     }
@@ -33,27 +44,27 @@ int main(int argc, char* argv[])
 }
 
 /// @brief Calculates the area for an array of Triangle*
-/// @param triangles 
-/// @param arrSize 
-void calcArea(Triangle* triangles[], int arrSize)
+/// @param triangles
+/// @param arrSize
+void calcArea(Triangle *triangles[], int arrSize)
 {
-    // Area = Square root of√s(s - a)(s - b)(s - c) 
+    // Area = Square root of√s(s - a)(s - b)(s - c)
     // where s is half the perimeter, or (a + b + c)/2
-    for(int i = 0; i < arrSize; i++)
+    for (int i = 0; i < arrSize; i++)
     {
-        float sperim = (triangles[i]->side1 + triangles[i]->side2 + triangles[i]->side3)/2;
+        float sperim = (triangles[i]->side1 + triangles[i]->side2 + triangles[i]->side3) / 2;
         triangles[i]->area = sqrt(sperim * (sperim - triangles[i]->side1) * (sperim - triangles[i]->side2) * (sperim - triangles[i]->side3));
     }
 }
 
 /// @brief This function takes in an array of pointers to Triangle and size and prints sides.
-/// @param triangles 
-/// @param arrSize 
-void printSides(Triangle* triangles[], int arrSize)
+/// @param triangles
+/// @param arrSize
+void printSides(Triangle *triangles[], int arrSize)
 {
-    for(int i = 0; i < arrSize; i++)
+    for (int i = 0; i < arrSize; i++)
     {
-        cout << "Triangle " << i+1 << ": " 
+        cout << "Triangle " << i + 1 << ": "
              << triangles[i]->side1 << ", "
              << triangles[i]->side2 << ", "
              << triangles[i]->side3
@@ -64,23 +75,47 @@ void printSides(Triangle* triangles[], int arrSize)
 /// @brief Create instance of Triangle and store
 ///        address inside of triangles.
 ///        Ask users for sides and store with struct dereferencing the address in triangles
-/// @param triangles 
-/// @param arrSize 
-void promptSides(Triangle* triangles[], int arrSize)
+/// @param triangles
+/// @param arrSize
+void promptSides(Triangle *triangles[], int arrSize, char promptOrFile)
 {
-    for(int i = 0; i < arrSize; i++)
-    {
-        triangles[i] = new Triangle;
-        cout << "Storing triangle " << i+1 << endl;
-        cout << "What is side1? ";
-        cin >> triangles[i]->side1;
-        cout << "What is side2? ";
-        cin >> (*triangles[i]).side2;
-        cout << "What is side3? ";
-        cin >> triangles[i]->side3;
-    }
-}
 
+
+    if (promptOrFile == 'P')
+    {
+        for (int i = 0; i < arrSize; i++)
+        {
+            triangles[i] = new Triangle;
+            cout << "Storing triangle " << i + 1 << endl;
+            cout << "What is side1? ";
+            cin >> triangles[i]->side1;
+            cout << "What is side2? ";
+            cin >> (*triangles[i]).side2;
+            cout << "What is side3? ";
+            cin >> triangles[i]->side3;
+        }
+    }
+    else
+    {
+        ifstream fin;
+        fin.open("input.txt");
+
+        for (int i = 0; i < arrSize; i++)
+        {
+            triangles[i] = new Triangle;
+            float side1, side2, side3;
+
+            fin >> side1 >> side2 >> side3;
+
+            triangles[i]->side1 = side1;
+            triangles[i]->side2 = side2;
+            triangles[i]->side3 = side3;
+        }
+        fin.close();
+    }
+
+    
+}
 
 // struct AnotherStruct
 // {
@@ -111,12 +146,6 @@ void promptSides(Triangle* triangles[], int arrSize)
 
 //     cout << *num1Ptr << endl;
 
-
-
-
-
-
-
 //     Rectangle rect1;
 //     Rectangle rect2;
 //     Rectangle rectangles[10];
@@ -135,7 +164,7 @@ void promptSides(Triangle* triangles[], int arrSize)
 //     rect1.area = rect1.side1 * rect1.side2;
 //     rect1.perimeter = 2*rect1.side1 + 2*rect1.side2;
 
-//     cout << "The rectangle with sides " 
+//     cout << "The rectangle with sides "
 //          << rect1.side1 << " and " << rect1.side2
 //          << " has an area of " << rect1.area
 //          << " and a perimeter of " << rect1.perimeter << endl;
