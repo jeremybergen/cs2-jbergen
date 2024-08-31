@@ -23,7 +23,7 @@ class Aclass
 {
     private:
     int _number1;
-    
+
     public:
     void setNumber1(int);
     friend void max(Aclass&, Bclass&);
@@ -54,7 +54,6 @@ int main(int argc, char* argv[])
     max(a1, b1);
     b1.getAclassNumber1(a1);
 
-    c1 = a1 + b1;
     // Rectangle rect1(42, 15);
 
     // cout << "The rectangle has an area of: " 
