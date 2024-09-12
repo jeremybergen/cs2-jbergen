@@ -16,9 +16,11 @@ namespace person
         string getName();
         int getAge();
         int getHeight();
+        void setName(string);
 
         public:
         Person(string = "", int = 42, int = 42);
+        
 
     };
 }

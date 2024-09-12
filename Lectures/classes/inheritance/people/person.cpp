@@ -8,7 +8,8 @@ person::Person::Person(string name, int age, int height)
 }
 string person::Person::getName()
 {
-    return _name;
+    string personName = _name;
+    return personName;
 }
 int person::Person::getAge()
 {

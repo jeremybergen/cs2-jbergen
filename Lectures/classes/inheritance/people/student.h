@@ -13,7 +13,7 @@ namespace students
         string _classLevel;
 
         public:
-        Student(int, string);
+        Student(int, string, int, int);
         int getId();
         string getClassLevel();
         void printInfo();
