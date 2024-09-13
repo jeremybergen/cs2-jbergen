@@ -63,5 +63,25 @@ Return if you updated cells or not to break out of while loop from main.
 */
 bool updateCellState(Cell* board[][10], int boardSize) 
 {
+    Cell* tmpBoard[10][10];
+    for(int i = 0; i < boardSize; i++)
+    {
+        for (int j = 0; j < boardSize; j++)
+        {
+            tmpBoard[i][j] = board[i][j];
+        }
+    }
+
+    //findNumNeighbors on tmpBoard
+
+    //update tmpBoard states
+
+    for(int i = 0; i < boardSize; i++)
+    {
+        for (int j = 0; j < boardSize; j++)
+        {
+            board[i][j] = tmpBoard[i][j];
+        }
+    }
     return false;
 }
