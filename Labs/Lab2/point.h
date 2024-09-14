@@ -27,9 +27,24 @@ namespace points
             //Setters
             void setX(int);
             void setY(int);
+            /*
+            This function takes in a point and sets nearestPoint to that point
+            */
             void setNearestPoint(Point*);
 
+            /*
+            This method takes in the array of pointers to Point
+            and the array size. It returns a pointer to the 
+            Point that is nearest to this.
+            */
             Point* calcNearestPoint(Point*[], unsigned long);
+            /*
+            This method takes in a Point and calculates
+            the cartesian distance between the passed in Point
+            and this.
+            
+            Returns the distance as a double.
+            */
             double distPoints(Point&);
     };
 }
