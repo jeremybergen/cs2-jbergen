@@ -21,11 +21,12 @@ using namespace std;
 // template <typename T1, typename T2>
 // T1 addNums(T1, T2);
 
-template <typename T1>
+template <typename T1, size_t arrSize = 10>
 class MyClass
 {
     private:
     T1 _id;
+    T1 _someArray[arrSize];
 
     public:
     void setId(const T1&);
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
     // MyClass<int> c1;
     // MyClass<string> c2;
     // MyClass<char> c3;
-    MyClass<TmpClass> c4;
+    MyClass<TmpClass, 100> c4;
     TmpClass tmp1;
 
     // c1.setId(42);
@@ -123,16 +124,16 @@ void TmpClass::setId(const int& id)
 }
 
 
-template <typename T1>
-void MyClass<T1>::setId(const T1& id)
+template <typename T1, size_t arrSize>
+void MyClass<T1, arrSize>::setId(const T1& id)
 {
     cout << "DEBUG: &id: " << &id << endl;
     _id = id;
     // cout << "DEBUG _id: " << _id << endl;
 }
 
-template <typename T1>
-T1 MyClass<T1>::getId()
+template <typename T1, size_t arrSize>
+T1 MyClass<T1, arrSize>::getId()
 {
     return _id;
 }
