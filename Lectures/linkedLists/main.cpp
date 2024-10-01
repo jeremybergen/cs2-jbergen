@@ -9,8 +9,9 @@ struct Node
 };
 
 void printList(Node*);
-void appendList(Node**, int);
-void deleteFromList(Node*);
+// void appendList(Node**, int);
+void insertList(Node**, int);
+void deleteFromList(Node**);
 void emptyList(Node*);
 
 int main(int argc, char* argv[])
@@ -28,25 +29,60 @@ int main(int argc, char* argv[])
         cout << "Enter a number: ";
         cin >> newNumber;
 
-        appendList(&list1, newNumber);
+        insertList(&list1, newNumber);
     }
 
     cout << "Printing List: " << endl;
+    printList(list1);
+
+    deleteFromList(&list1);
+    cout << "Printing after delete: " << endl;
     printList(list1);
 
     emptyList(list1);
     return 0;
 }
 
-void deleteFromList(Node* list1)
+void insertList(Node** list1, int newData)
+{
+    Node* newNode = new Node;
+    newNode->data = newData;
+    newNode->next = nullptr;
+
+    // list1 is empty
+    if(*list1 == nullptr)
+    {
+        *list1 = newNode;
+    }
+    else
+    {
+        //list1 not empty
+        Node* head = *list1;
+        while(head->next != nullptr && head->next->data < newData)
+        {
+            head = head->next;
+        }
+    }
+}
+
+void deleteFromList(Node** list1)
 {
     int valToDelete;
 
     cout << "Enter the number to delete: ";
     cin >> valToDelete;
 
-    Node* head = list1;
-    while(head->next != nullptr && head->next->data != valToDelete)
+    Node* head = *list1;
+    if(head->data == valToDelete)
+    {
+        Node* nodeToDelete = head;
+        *list1 = head->next;
+        // head->next = nodeToDelete->next;
+        // or head->next = head->next->next;
+        delete nodeToDelete;
+        return;
+    }
+    while((head->next != nullptr && head->next->data != valToDelete))
     {
         head = head->next;
     }
@@ -54,7 +90,12 @@ void deleteFromList(Node* list1)
     {
         Node* nodeToDelete = head->next;
         head->next = nodeToDelete->next;
+        // or head->next = head->next->next;
         delete nodeToDelete;
+    }
+    else
+    {
+        cout << "Node not found" << endl;
     }
 }
 
@@ -69,28 +110,28 @@ void emptyList(Node* list1)
     }
 }
 
-void appendList(Node** list1, int inputNumber)
-{
-    Node* newNode = new Node;
-    newNode->data = inputNumber;
-    newNode->next = nullptr;
+// void appendList(Node** list1, int inputNumber)
+// {
+//     Node* newNode = new Node;
+//     newNode->data = inputNumber;
+//     newNode->next = nullptr;
 
-    // list1 is empty
-    if(*list1 == nullptr)
-    {
-        *list1 = newNode;
-    }
-    else
-    {
-        //list1 has at least 1 element already
-        Node* head = *list1;
-        while(head->next != nullptr)
-        {
-            head = head->next;
-        }
-        head->next = newNode;
-    }
-}
+//     // list1 is empty
+//     if(*list1 == nullptr)
+//     {
+//         *list1 = newNode;
+//     }
+//     else
+//     {
+//         //list1 has at least 1 element already
+//         Node* head = *list1;
+//         while(head->next != nullptr)
+//         {
+//             head = head->next;
+//         }
+//         head->next = newNode;
+//     }
+// }
 
 void printList(Node* linkedList)
 {
