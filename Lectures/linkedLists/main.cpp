@@ -30,9 +30,12 @@ int main(int argc, char* argv[])
         cin >> newNumber;
 
         insertList(&list1, newNumber);
+
+        cout << "Printing List: " << endl;
+        printList(list1);
     }
 
-    cout << "Printing List: " << endl;
+    cout << "Printing Complete List: " << endl;
     printList(list1);
 
     deleteFromList(&list1);
@@ -61,6 +64,16 @@ void insertList(Node** list1, int newData)
         while(head->next != nullptr && head->next->data < newData)
         {
             head = head->next;
+        }
+        if(head->data > newData)
+        {
+            newNode->next = head;
+            *list1 = newNode;
+        }
+        else
+        {
+            newNode->next = head->next;
+            head->next = newNode;
         }
     }
 }
@@ -138,9 +151,11 @@ void printList(Node* linkedList)
     Node* head = linkedList;
     while(head != nullptr)
     {
-        cout << "head->data: " << head->data << endl;
+        // cout << "head->data: " << head->data << endl;
+        cout << head->data << " ";
         head = head->next;
     }
+    cout << endl;
 }
 
 
