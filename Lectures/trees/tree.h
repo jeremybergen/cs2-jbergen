@@ -11,6 +11,9 @@ class Tree
     void postOrderPrint(Node*);
     void preOrderPrint(Node*);
     void destroyTree(Node*);
+    Node* searchTree(Node*, int);
+    Node* removeNode(Node*, int);
+    Node* minVal(Node*);
 
     public:
     Tree();
@@ -19,7 +22,79 @@ class Tree
     void inOrder();
     void postOrder();
     void preOrder();
+    bool search(int);
+    void remove(int);
 };
+
+Node* Tree::minVal(Node* root)
+{
+    Node* curNode = root;
+    while(curNode != nullptr && curNode->getLeft() != nullptr)
+    {
+        curNode = curNode->getLeft();
+    }
+    return curNode;
+}
+
+Node* Tree::removeNode(Node* root, int data)
+{
+    if(root == nullptr) return;
+    if(root->getData() > data)
+    {
+        root->setLeft(removeNode(root->getLeft(), data));
+    }
+    else if (root->getData() < data)
+    {
+        root->setRight(removeNode(root->getRight(), data));
+    }
+    else
+    {
+        if(root->getLeft() == nullptr)
+        {
+            Node* tmpNode = root->getRight();
+            delete root;
+            return tmpNode;
+        }
+        else if(root->getRight() == nullptr)
+        {
+            Node* tmpNode = root->getLeft();
+            delete root;
+            return tmpNode;
+        }
+        Node* minNode = minVal(root->getRight());
+
+        root->setData(minNode->getData());
+        root->setRight(removeNode(root->getRight(), minNode->getData()));
+    }
+}
+
+void Tree::remove(int data)
+{
+
+}
+
+Node* Tree::searchTree(Node* root, int data)
+{
+    if(root == nullptr || root->getData() == data)
+    {
+        return root;
+    }
+
+    if(root->getData() > data)
+    {
+        return searchTree(root->getLeft(), data);
+    }
+    return searchTree(root->getRight(), data);
+}
+
+bool Tree::search(int data)
+{
+    Node* foundNode;
+    foundNode = searchTree(_root, data);
+
+    if(foundNode == nullptr) return false;
+    return true;
+}
 
 Tree::~Tree()
 {
@@ -31,7 +106,7 @@ void Tree::destroyTree(Node* root)
     if(root == nullptr) return;
     destroyTree(root->getLeft());
     destroyTree(root->getRight());
-    std::cout << "Freeing: " << &root << std::endl;
+    // std::cout << "Freeing: " << &root << std::endl;
     delete root;
 }
 

@@ -24,5 +24,9 @@ int main(int argc, char* argv[])
     cout << "Post Order: ";
     tree1.postOrder();
 
+    cout << "What number to search for: ";
+    cin >> inputData;
+    cout << boolalpha << tree1.search(inputData) << endl;
+
     return 0;
 }
