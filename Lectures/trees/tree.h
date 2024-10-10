@@ -1,65 +1,108 @@
 #pragma once
 #include "node.h"
+#include <iostream>
 
 class Tree
 {
     private:
     Node* _root;
     Node* privateAddNode(Node*, int);
+    void inOrderPrint(Node*);
+    void postOrderPrint(Node*);
+    void preOrderPrint(Node*);
+    void destroyTree(Node*);
 
     public:
     Tree();
+    ~Tree();
     void addNode(int);
+    void inOrder();
+    void postOrder();
+    void preOrder();
 };
+
+Tree::~Tree()
+{
+    destroyTree(_root);
+}
+
+void Tree::destroyTree(Node* root)
+{
+    if(root == nullptr) return;
+    destroyTree(root->getLeft());
+    destroyTree(root->getRight());
+    std::cout << "Freeing: " << &root << std::endl;
+    delete root;
+}
+
+void Tree::inOrderPrint(Node* root)
+{
+    if(root == nullptr) return;
+
+    inOrderPrint(root->getLeft());
+    std::cout << root->getData() << " ";
+    inOrderPrint(root->getRight());
+}
+
+void Tree::inOrder()
+{
+    inOrderPrint(_root);
+    std::cout << std::endl;
+}
+
+void Tree::postOrderPrint(Node* root)
+{
+    if(root == nullptr) return;
+
+    postOrderPrint(root->getLeft());
+    postOrderPrint(root->getRight());
+    std::cout << root->getData() << " ";
+}
+
+void Tree::preOrderPrint(Node* root)
+{
+    if(root == nullptr) return;
+
+    std::cout << root->getData() << " ";
+    preOrderPrint(root->getLeft());
+    preOrderPrint(root->getRight());
+}
+
+void Tree::postOrder()
+{
+    postOrderPrint(_root);
+    std::cout << std::endl;
+}
+
+void Tree::preOrder()
+{
+    preOrderPrint(_root);
+    std::cout << std::endl;
+}
 
 Node* Tree::privateAddNode(Node* curNode, int data)
 {
-    if(curNode->getData() < data && curNode->getRight() == nullptr)
+    if(curNode == nullptr)
     {
         Node* newNode = new Node(data);
-        curNode->setRight(newNode);
-        return curNode;
+        return newNode;
     }
-    if(curNode->getData() > data && curNode->getLeft() == nullptr)
+
+    if(curNode->getData() > data)
     {
-        Node* newNode = new Node(data);
-        curNode->setLeft(newNode);
-        return curNode;
+        curNode->setLeft(privateAddNode(curNode->getLeft(), data));
     }
-
-    if(curNode->getData() < data)
+    else if (curNode->getData() < data)
     {
-        privateAddNode(curNode->getRight(), data);
-    }
-    else
-    {
-        privateAddNode(curNode->getLeft(), data);
+        curNode->setRight(privateAddNode(curNode->getRight(), data));
     }
 
-    // Node* newNode = new Node(data);
-
-    // Node* curNode = _root;
-    // while(curNode->getRight() != nullptr)
-    // {
-    //     if(_root->getData() < data && _root->getRight() == nullptr)
-    //     {
-    //         _root->setRight(newNode);
-    //     }
-    // }
-
+    return curNode;
 }
 
 void Tree::addNode(int data)
 {
-    Node* newNode = new Node(data);
-
-    if(_root == nullptr)
-    {
-        _root = newNode;
-    }
-    else
-    {
-    }
+    _root = privateAddNode(_root, data);
 }
 
 Tree::Tree()
