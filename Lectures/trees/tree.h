@@ -2,33 +2,42 @@
 #include "node.h"
 #include <iostream>
 
+template <class T1>
 class Tree
 {
     private:
-    Node* _root;
-    Node* privateAddNode(Node*, int);
-    void inOrderPrint(Node*);
-    void postOrderPrint(Node*);
-    void preOrderPrint(Node*);
-    void destroyTree(Node*);
-    Node* searchTree(Node*, int);
-    Node* removeNode(Node*, int);
-    Node* minVal(Node*);
+    Node<T1>* _root;
+    Node<T1>* privateAddNode(Node<T1>*, T1);
+    void inOrderPrint(Node<T1>*);
+    void postOrderPrint(Node<T1>*);
+    void preOrderPrint(Node<T1>*);
+    void destroyTree(Node<T1>*);
+    Node<T1>* searchTree(Node<T1>*, T1);
+    Node<T1>* removeNode(Node<T1>*, T1);
+    Node<T1>* minVal(Node<T1>*);
 
     public:
     Tree();
     ~Tree();
-    void addNode(int);
+    void addNode(T1);
     void inOrder();
     void postOrder();
     void preOrder();
-    bool search(int);
-    void remove(int);
+    bool search(T1);
+    void remove(T1);
+    void printRoot();
 };
 
-Node* Tree::minVal(Node* root)
+template <class T1>
+void Tree<T1>::printRoot()
 {
-    Node* curNode = root;
+    std::cout << _root->getData() << std::endl;
+}
+
+template <class T1>
+Node<T1>* Tree<T1>::minVal(Node<T1>* root)
+{
+    Node<T1>* curNode = root;
     while(curNode != nullptr && curNode->getLeft() != nullptr)
     {
         curNode = curNode->getLeft();
@@ -36,9 +45,10 @@ Node* Tree::minVal(Node* root)
     return curNode;
 }
 
-Node* Tree::removeNode(Node* root, int data)
+template <class T1>
+Node<T1>* Tree<T1>::removeNode(Node<T1>* root, T1 data)
 {
-    if(root == nullptr) return;
+    if(root == nullptr) return root;
     if(root->getData() > data)
     {
         root->setLeft(removeNode(root->getLeft(), data));
@@ -51,29 +61,34 @@ Node* Tree::removeNode(Node* root, int data)
     {
         if(root->getLeft() == nullptr)
         {
-            Node* tmpNode = root->getRight();
+            Node<T1>* tmpNode = root->getRight();
             delete root;
             return tmpNode;
         }
         else if(root->getRight() == nullptr)
         {
-            Node* tmpNode = root->getLeft();
+            Node<T1>* tmpNode = root->getLeft();
             delete root;
             return tmpNode;
         }
-        Node* minNode = minVal(root->getRight());
+        Node<T1>* minNode = minVal(root->getRight());
 
         root->setData(minNode->getData());
         root->setRight(removeNode(root->getRight(), minNode->getData()));
     }
+    return root;
 }
 
-void Tree::remove(int data)
+template <class T1>
+void Tree<T1>::remove(T1 data)
 {
-
+    // Node<T1>* foundNode;
+    // foundNode = searchTree(_root, data);
+    _root = removeNode(_root, data);
 }
 
-Node* Tree::searchTree(Node* root, int data)
+template <class T1>
+Node<T1>* Tree<T1>::searchTree(Node<T1>* root, T1 data)
 {
     if(root == nullptr || root->getData() == data)
     {
@@ -87,21 +102,24 @@ Node* Tree::searchTree(Node* root, int data)
     return searchTree(root->getRight(), data);
 }
 
-bool Tree::search(int data)
+template <class T1>
+bool Tree<T1>::search(T1 data)
 {
-    Node* foundNode;
+    Node<T1>* foundNode;
     foundNode = searchTree(_root, data);
 
     if(foundNode == nullptr) return false;
     return true;
 }
 
-Tree::~Tree()
+template <class T1>
+Tree<T1>::~Tree()
 {
     destroyTree(_root);
 }
 
-void Tree::destroyTree(Node* root)
+template <class T1>
+void Tree<T1>::destroyTree(Node<T1>* root)
 {
     if(root == nullptr) return;
     destroyTree(root->getLeft());
@@ -110,7 +128,8 @@ void Tree::destroyTree(Node* root)
     delete root;
 }
 
-void Tree::inOrderPrint(Node* root)
+template <class T1>
+void Tree<T1>::inOrderPrint(Node<T1>* root)
 {
     if(root == nullptr) return;
 
@@ -119,13 +138,15 @@ void Tree::inOrderPrint(Node* root)
     inOrderPrint(root->getRight());
 }
 
-void Tree::inOrder()
+template <class T1>
+void Tree<T1>::inOrder()
 {
     inOrderPrint(_root);
     std::cout << std::endl;
 }
 
-void Tree::postOrderPrint(Node* root)
+template <class T1>
+void Tree<T1>::postOrderPrint(Node<T1>* root)
 {
     if(root == nullptr) return;
 
@@ -134,7 +155,8 @@ void Tree::postOrderPrint(Node* root)
     std::cout << root->getData() << " ";
 }
 
-void Tree::preOrderPrint(Node* root)
+template <class T1>
+void Tree<T1>::preOrderPrint(Node<T1>* root)
 {
     if(root == nullptr) return;
 
@@ -143,23 +165,26 @@ void Tree::preOrderPrint(Node* root)
     preOrderPrint(root->getRight());
 }
 
-void Tree::postOrder()
+template <class T1>
+void Tree<T1>::postOrder()
 {
     postOrderPrint(_root);
     std::cout << std::endl;
 }
 
-void Tree::preOrder()
+template <class T1>
+void Tree<T1>::preOrder()
 {
     preOrderPrint(_root);
     std::cout << std::endl;
 }
 
-Node* Tree::privateAddNode(Node* curNode, int data)
+template <class T1>
+Node<T1>* Tree<T1>::privateAddNode(Node<T1>* curNode, T1 data)
 {
     if(curNode == nullptr)
     {
-        Node* newNode = new Node(data);
+        Node<T1>* newNode = new Node(data);
         return newNode;
     }
 
@@ -175,12 +200,14 @@ Node* Tree::privateAddNode(Node* curNode, int data)
     return curNode;
 }
 
-void Tree::addNode(int data)
+template <class T1>
+void Tree<T1>::addNode(T1 data)
 {
     _root = privateAddNode(_root, data);
 }
 
-Tree::Tree()
+template <class T1>
+Tree<T1>::Tree()
 {
     _root = nullptr;
 }

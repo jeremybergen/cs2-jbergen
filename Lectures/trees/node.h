@@ -1,55 +1,65 @@
 #pragma once
 
+template <class T1>
 class Node
 {
     private:
     int _data;
-    Node* _left;
-    Node* _right;
+    Node<T1>* _left;
+    Node<T1>* _right;
 
     public:
     // construtor
-    Node(int = 0, Node* = nullptr, Node* = nullptr);
+    Node(int = 0, Node<T1>* = nullptr, Node<T1>* = nullptr);
     // setters
     void setData(int);
-    void setLeft(Node*);
-    void setRight(Node*);
+    void setLeft(Node<T1>*);
+    void setRight(Node<T1>*);
     // getters
     int getData();
-    Node* getLeft();
-    Node* getRight();
+    Node<T1>* getLeft();
+    Node<T1>* getRight();
 };
 
 // construtor
-Node::Node(int data, Node* left, Node* right)
+template <class T1>
+Node<T1>::Node(int data, Node<T1>* left, Node<T1>* right)
 {
     _data = data;
     _left = left;
     _right = right;
 }
 // setters
-void Node::setData(int data)
+template <class T1>
+void Node<T1>::setData(int data)
 {
     _data = data;
 }
-void Node::setLeft(Node* left)
+
+template <class T1>
+void Node<T1>::setLeft(Node<T1>* left)
 {
     _left = left;
 }
-void Node::setRight(Node* right)
+
+template <class T1>
+void Node<T1>::setRight(Node<T1>* right)
 {
     _right = right;
 }
 // getters
-int Node::getData()
+template <class T1>
+int Node<T1>::getData()
 {
     return _data;
 }
-Node* Node::getLeft()
+template <class T1>
+Node<T1>* Node<T1>::getLeft()
 {
     return _left;
 }
-Node* Node::getRight()
+template <class T1>
+Node<T1>* Node<T1>::getRight()
 {
     return _right;
 }
