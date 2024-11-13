@@ -6,6 +6,9 @@ using namespace std;
 void printArray(int[], int);
 void bubbleSort(int[], int);
 void selectionSort(int[], int);
+void insertionSort(int[], int);
+void mergeSort(int[], int, int);
+void merge(int[], int, int, int);
 
 int main(int argc, char* argv[])
 {
@@ -17,7 +20,9 @@ int main(int argc, char* argv[])
     printArray(numbers, arrSize);
 
     // bubbleSort(numbers, arrSize);
-    selectionSort(numbers, arrSize);
+    // selectionSort(numbers, arrSize);
+    // insertionSort(numbers, arrSize);
+    mergeSort(numbers, 0, arrSize);
 
     cout << "Sorted: " << endl;
     printArray(numbers, arrSize);
@@ -75,4 +80,40 @@ void selectionSort(int numbers[], int arrSize)
         }
         printArray(numbers, arrSize);
     }
+}
+
+void insertionSort(int numbers[], int arrSize)
+{
+    int key, j;
+    for(int i = 1; i < arrSize; i++)
+    {
+        key = numbers[i];
+        j = i - 1;
+        while(j >= 0 && numbers[j] > key)
+        {
+            numbers[j + 1] = numbers[j];
+            j = j - 1;
+        }
+        numbers[j + 1] = key;
+        printArray(numbers, arrSize);
+    }
+}
+
+void mergeSort(int numbers[], int begin, int end)
+{
+    if(begin >= end) return;
+
+    int mid = begin + (end - begin) /2;
+    mergeSort(numbers, begin, mid);
+    mergeSort(numbers, mid + 1, end);
+    merge(numbers, begin, mid, end);
+}
+
+void merge(int numbers[], int begin, int mid, int end)
+{
+    int leftSize = mid - begin + 1;
+    int rightSize = end - mid;
+
+    int leftNums[leftSize];
+    int rightNums[rightSize];
 }
