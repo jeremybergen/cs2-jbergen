@@ -104,6 +104,7 @@ void mergeSort(int numbers[], int begin, int end)
     if(begin >= end) return;
 
     int mid = begin + (end - begin) /2;
+    // cout << "mid: " << mid << endl;
     mergeSort(numbers, begin, mid);
     mergeSort(numbers, mid + 1, end);
     merge(numbers, begin, mid, end);
@@ -111,9 +112,56 @@ void mergeSort(int numbers[], int begin, int end)
 
 void merge(int numbers[], int begin, int mid, int end)
 {
+    cout << "begin: " << begin << ", mid: " << mid << ", end: " << end << endl;
     int leftSize = mid - begin + 1;
     int rightSize = end - mid;
 
     int leftNums[leftSize];
     int rightNums[rightSize];
+
+    for(int i = 0; i < leftSize; i++)
+    {
+        leftNums[i] = numbers[begin + i];
+    }
+    for(int i = 0; i < rightSize; i++)
+    {
+        rightNums[i] = numbers[mid + i + 1];
+    }
+
+    int i, j, k;
+    i = 0;
+    j = 0;
+    k = begin;
+    while(i < leftSize && j < rightSize)
+    {
+        if(leftNums[i] <= rightNums[j])
+        {
+            numbers[k] = leftNums[i];
+            i++;
+        }
+        else
+        {
+            numbers[k] = rightNums[j];
+            j++;
+        }
+        k++;
+    }
+    while(i < leftSize)
+    {
+        numbers[k] = leftNums[i];
+        i++;
+        k++;
+    }
+    while(j < rightSize)
+    {
+        numbers[k] = rightNums[j];
+        j++;
+        k++;
+    }
+    // cout << "Merged Array: " << endl;
+    // for(int i = 0; i < k; i++)
+    // {
+    //     cout << numbers[i] << " ";
+    // }
+    // cout << endl;
 }
