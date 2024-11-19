@@ -1,5 +1,7 @@
 #include <iostream>
 #include <algorithm>
+#include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -13,25 +15,93 @@ void merge(int[], int, int, int);
 void quickSort(int[], int, int);
 int partition(int[], int, int);
 
+void copyArray(int[], int[], int);
+void buildArray(int[], int);
+
 int main(int argc, char* argv[])
 {
-    int arrSize = 8;
-    int numbers[] = {42, 15, 23, 9, 100, 5, 13, 1};
+    int arrSize = 10000;
+    // int numbers[] = {42, 15, 23, 9, 100, 5, 13, 1};
     // int numbers[] = {1, 5, 9, 13, 23, 42, 100, 15};
+    int numbers[arrSize];
+    int bubbleArray[arrSize];
+    int selectionArray[arrSize];
+    int insertionArray[arrSize];
+    int mergeArray[arrSize];
+    int quickArray[arrSize];
 
-    cout << "Unsorted: " << endl;
-    printArray(numbers, arrSize);
+    buildArray(numbers, arrSize);
+    copyArray(numbers, bubbleArray, arrSize);
+    copyArray(numbers, selectionArray, arrSize);
+    copyArray(numbers, insertionArray, arrSize);
+    copyArray(numbers, mergeArray, arrSize);
+    copyArray(numbers, quickArray, arrSize);
+
+    // cout << "Unsorted: " << endl;
+    // printArray(bubbleArray, arrSize);
+
+    // cout << "Sorted: " << endl;
+    // printArray(bubbleArray, arrSize);
+    auto start = chrono::system_clock::now();
+    bubbleSort(bubbleArray, arrSize);
+    auto end = chrono::system_clock::now();
+    auto elapsed = end - start;
+    cout << "Bubble Sort: " << elapsed.count() << endl;
+
+    start = chrono::system_clock::now();
+    selectionSort(selectionArray, arrSize);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Selection Sort: " << elapsed.count() << endl;
+
+    start = chrono::system_clock::now();
+    insertionSort(insertionArray, arrSize);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Insertion Sort: " << elapsed.count() << endl;
+
+    start = chrono::system_clock::now();
+    mergeSort(mergeArray, 0, arrSize - 1);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Merge Sort: " << elapsed.count() << endl;
+
+    start = chrono::system_clock::now();
+    quickSort(quickArray, 0, arrSize - 1);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Quick Sort: " << elapsed.count() << endl;
+
+    // cout << "Unsorted: " << endl;
+    // printArray(numbers, arrSize);
 
     // bubbleSort(numbers, arrSize);
     // selectionSort(numbers, arrSize);
     // insertionSort(numbers, arrSize);
     // mergeSort(numbers, 0, arrSize - 1);
-    quickSort(numbers, 0, arrSize - 1);
+    // quickSort(numbers, 0, arrSize - 1);
 
-    cout << "Sorted: " << endl;
-    printArray(numbers, arrSize);
+    // cout << "Sorted: " << endl;
+    // printArray(numbers, arrSize);
 
     return 0;
+}
+
+void buildArray(int array[], int arrSize)
+{
+    srand(time(0));
+    for(int i = 0; i < arrSize; i++)
+    {
+        array[i] = rand()%arrSize;
+    }
+}
+
+void copyArray(int array1[], int array2[], int arrSize)
+{
+    for(int i = 0; i < arrSize; i++)
+    {
+        array2[i] = array1[i];
+    }
 }
 
 void printArray(int numbers[], int arrSize)
@@ -60,7 +130,7 @@ void bubbleSort(int numbers[], int arrSize)
                 numbers[j+1] = tmp;
             }
         }
-        printArray(numbers, arrSize);
+        // printArray(numbers, arrSize);
         if(!swapped) break;
     }
 }
@@ -82,7 +152,7 @@ void selectionSort(int numbers[], int arrSize)
         {
             swap(numbers[minimum], numbers[i]);
         }
-        printArray(numbers, arrSize);
+        // printArray(numbers, arrSize);
     }
 }
 
@@ -99,7 +169,7 @@ void insertionSort(int numbers[], int arrSize)
             j = j - 1;
         }
         numbers[j + 1] = key;
-        printArray(numbers, arrSize);
+        // printArray(numbers, arrSize);
     }
 }
 
@@ -176,8 +246,8 @@ void quickSort(int numbers[], int begin, int end)
 
     // partition array so left is smaller, right is larger
     int partIdx = partition(numbers, begin, end);
-    cout << "Array: ";
-    printArray(numbers, end+1);
+    // cout << "Array: ";
+    // printArray(numbers, end+1);
     quickSort(numbers, begin, partIdx - 1);
     // cout << "Array: ";
     // printArray(numbers, end+1);
@@ -201,7 +271,8 @@ int partition(int numbers[], int begin, int end)
             swap(numbers[i], numbers[j]);
         }
     }
-    swap(numbers[i+1], numbers[end]);
+    i++;
+    swap(numbers[i], numbers[end]);
 
-    return i+1;
+    return i;
 }
