@@ -10,6 +10,9 @@ void insertionSort(int[], int);
 void mergeSort(int[], int, int);
 void merge(int[], int, int, int);
 
+void quickSort(int[], int, int);
+int partition(int[], int, int);
+
 int main(int argc, char* argv[])
 {
     int arrSize = 8;
@@ -22,7 +25,8 @@ int main(int argc, char* argv[])
     // bubbleSort(numbers, arrSize);
     // selectionSort(numbers, arrSize);
     // insertionSort(numbers, arrSize);
-    mergeSort(numbers, 0, arrSize);
+    // mergeSort(numbers, 0, arrSize - 1);
+    quickSort(numbers, 0, arrSize - 1);
 
     cout << "Sorted: " << endl;
     printArray(numbers, arrSize);
@@ -112,7 +116,7 @@ void mergeSort(int numbers[], int begin, int end)
 
 void merge(int numbers[], int begin, int mid, int end)
 {
-    cout << "begin: " << begin << ", mid: " << mid << ", end: " << end << endl;
+    // cout << "begin: " << begin << ", mid: " << mid << ", end: " << end << endl;
     int leftSize = mid - begin + 1;
     int rightSize = end - mid;
 
@@ -164,4 +168,40 @@ void merge(int numbers[], int begin, int mid, int end)
     //     cout << numbers[i] << " ";
     // }
     // cout << endl;
+}
+
+void quickSort(int numbers[], int begin, int end)
+{
+    if(begin >= end) return;
+
+    // partition array so left is smaller, right is larger
+    int partIdx = partition(numbers, begin, end);
+    cout << "Array: ";
+    printArray(numbers, end+1);
+    quickSort(numbers, begin, partIdx - 1);
+    // cout << "Array: ";
+    // printArray(numbers, end+1);
+    quickSort(numbers, partIdx + 1, end);
+}
+
+int partition(int numbers[], int begin, int end)
+{
+    
+    int pivotIdx = begin + (end - begin)/2;
+    swap(numbers[pivotIdx], numbers[end]);
+    int pivot = numbers[end];
+
+    int i = begin - 1;
+
+    for(int j = begin; j < end; j++)
+    {
+        if(numbers[j] <= pivot)
+        {
+            i++;
+            swap(numbers[i], numbers[j]);
+        }
+    }
+    swap(numbers[i+1], numbers[end]);
+
+    return i+1;
 }
