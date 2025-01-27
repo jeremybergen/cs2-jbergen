@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <cstdio>
 
 /// @brief Prompt for the sides of a rectangle
 /// @param  int side1
