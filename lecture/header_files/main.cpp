@@ -8,6 +8,8 @@ void test();
 
 int main(int argc, char* argv[])
 {
+    // WILL NOT WORK!!!
+    // if((string)argv[1] == "test" && argc >= 2)
     if(argc >= 2 && (string)argv[1] == "test")
     {
         test();
@@ -36,7 +38,7 @@ int main(int argc, char* argv[])
 void test()
 {
     assert(calcArea(4, 5) == 20);
-    assert(calcPerim(4, 5) == 22);
+    assert(calcPerim(4, 5) == 18);
     assert(calcArea(12, 47) == 564);
     assert(calcPerim(1, 2) == 6);
     cout << "All test cases passed" << endl;
