@@ -20,7 +20,7 @@ Should create structs and populate the array
 */
 void initCells(Cell* board[][10], int boardSize)
 {
-
+    cout << "DEBUG: Inside initCells" << endl;
 }
 
 /*

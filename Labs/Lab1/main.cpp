@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     readBoard(board, boardSize);
 
     while(boardChanged) {
-        clearScreen();
+        // clearScreen();
         cout << "Stage: " << stage << endl;
 
         printCells(board, boardSize);
