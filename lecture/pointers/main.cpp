@@ -4,32 +4,40 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    int board[3][3];
-
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 10; i++)
     {
-        for(int j = 0; j < 3; j++)
+        if(i == 5)
         {
-            board[i][j] = 0;
+            break;
         }
+        cout << "i: " << i << endl;
     }
+    // int board[3][3];
 
-    int* ptr1 = &board[0][0];
+    // for(int i = 0; i < 3; i++)
+    // {
+    //     for(int j = 0; j < 3; j++)
+    //     {
+    //         board[i][j] = 0;
+    //     }
+    // }
 
-    for(int i = 0; i < 9; i++)
-    {
-        *(ptr1 + i) = 1;
-    }
+    // int* ptr1 = &board[0][0];
 
-    for(int i = 0; i < 3; i++)
-    {
-        for(int j = 0; j < 3; j++)
-        {
-            cout << "board[" << i << "][" 
-                 << j << "]: " 
-                 << board[i][j] << endl;
-        }
-    }
+    // for(int i = 0; i < 9; i++)
+    // {
+    //     *(ptr1 + i) = 1;
+    // }
+
+    // for(int i = 0; i < 3; i++)
+    // {
+    //     for(int j = 0; j < 3; j++)
+    //     {
+    //         cout << "board[" << i << "][" 
+    //              << j << "]: " 
+    //              << board[i][j] << endl;
+    //     }
+    // }
 
     // int nums[5];
     // int* ptr1;
