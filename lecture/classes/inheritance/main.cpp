@@ -16,7 +16,7 @@ class Vehicle
         Engine _engType;
     public:
         // Default Constructor
-        Vehicle();
+        Vehicle(string = "", int = 0, float = 0.0);
 
         // Getters
         string getFuelType();
@@ -32,7 +32,7 @@ class Truck : public Vehicle
         int _numTires;
     public:
         // Default Constructor
-        Truck();
+        Truck(int = 0, string = "", int = 0, float = 0.0);
 
         // Getters
         int getNumTires();
@@ -41,23 +41,87 @@ class Truck : public Vehicle
         void setNumTires(int);
 };
 
+class TowTruck : public Truck
+{
+    private:
+        bool _winch;
+
+    public:
+        // Constructor
+        TowTruck(bool = false, int = 0, string = "", int = 0, float = 0.0);
+        // Setters
+        void setWinch(bool);
+
+        // Getters
+        bool getWinch();
+};
+
+class Unicycle : public Truck
+{
+    public:
+        Unicycle();
+};
+
+class Boat : public Vehicle
+{
+    private:
+        const int _numTires = 0;
+};
+
 int main(int argc, char* argv[])
 {
-    Truck myTruck;
+    // Truck myTruck;
 
-    myTruck.setNumTires(4);
-    myTruck.setFuelType("Hybrid");
-    myTruck.setEngType(6, 5.6);
+    // myTruck.setNumTires(4);
+    // myTruck.setFuelType("Hybrid");
+    // myTruck.setEngType(6, 5.6);
 
-    cout << "My Truck has : " << myTruck.getNumTires() << " tires." << endl;
-    cout << myTruck.getFuelType() << " Type of fuel" << endl;
+    // cout << "My Truck has : " << myTruck.getNumTires() << " tires." << endl;
+    // cout << myTruck.getFuelType() << " Type of fuel" << endl;
+
+    // TowTruck myTowTruck(true, 10, "Jet Fuel", 20, 8);
+    Unicycle myTowTruck;
+
+    // myTowTruck.setWinch(true);
+    // myTowTruck.setNumTires(6);
+    // myTowTruck.setEngType(8, 6);
+    // myTowTruck.setFuelType("diesel");
+
+    // cout << boolalpha << "myTowTruck: " << myTowTruck.getWinch() << endl;
+    cout << "myTowTruck: " << myTowTruck.getNumTires() << endl;
+    cout << "myTowTruck: " << myTowTruck.getFuelType() << endl;
+    cout << "myTowTruck: " << myTowTruck.getEngType()._numRoundThings << endl;
+    cout << "myTowTruck: " << myTowTruck.getEngType()._volume << endl;
 
     return 0;
 }
 
-Truck::Truck()
+Unicycle::Unicycle() : Truck(1, "Legs", 0, 0)
 {
-    _numTires = 0;
+
+}
+
+TowTruck::TowTruck(bool winch, int numTires, string fuelType, int numRoundThings, float volume) : Truck(numTires, fuelType, numRoundThings, volume)
+{
+    _winch = winch;
+    
+}
+
+// Setters
+void TowTruck::setWinch(bool winch)
+{
+    _winch = winch;
+}
+
+// Getters
+bool TowTruck::getWinch()
+{
+    return _winch;
+}
+
+Truck::Truck(int numTires, string fuelType, int numRoundThings, float volume) : Vehicle(fuelType, numRoundThings, volume)
+{
+    _numTires = numTires;
 }
 
 // Getters
@@ -72,11 +136,11 @@ void Truck::setNumTires(int numTires)
     _numTires = numTires;
 }
 
-Vehicle::Vehicle()
+Vehicle::Vehicle(string fuelType, int numRoundThings, float volume)
 {
-    _fuelType = "";
-    _engType._numRoundThings = 0;
-    _engType._volume = 0.0;
+    _fuelType = fuelType;
+    _engType._numRoundThings = numRoundThings;
+    _engType._volume = volume;
 }
 
 // Getters
