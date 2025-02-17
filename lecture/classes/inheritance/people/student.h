@@ -8,6 +8,7 @@ namespace people
         private:
             int _numYears;
             string _classes[10];
+            int _arrSize;
         
         public:
             /// @brief Student constructor derived from Person
@@ -17,7 +18,8 @@ namespace people
             /// @param  fName first name
             /// @param  lName last name
             /// @param  age age
-            Student(int, string[], int, string, string, int);
+            // Student(int, string[], int, string, string, int);
+            Student(int, string, string, string, int);
 
             
     };
