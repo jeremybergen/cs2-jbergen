@@ -8,53 +8,65 @@ struct Node
     Node* _next;
 };
 
+void buildList(Node **);
+
 int main(int argc, char* argv[])
 {
-    // Node node1;
-    Node* head = nullptr;
+    Node* myList = nullptr;
 
-    for(int i = 0; i < 10; i++)
+    buildList(&myList);
+
+    Node* cNode = myList;
+    while(cNode != nullptr)
     {
-        Node* tmpNode = new Node;
-        cout << "Enter a number: ";
-        cin >> tmpNode->_data;
-        tmpNode->_next = nullptr;
-        if(head == nullptr) head = tmpNode;
-        else
+        if(cNode->_next == nullptr)
         {
-            Node* currentNode = head;
-            while(currentNode->_next != nullptr)
-            {
-                currentNode = currentNode->_next;
-            }
-            currentNode->_next = tmpNode;
+            cout << cNode->_data << endl;
+            // continue;
+            break;
         }
+        
+        cout << cNode->_data << "->";
+        cNode = cNode->_next;
     }
-    // Node node2;
-    // Node node3;
 
-    // node1._data = 42;
-    // node2._data = 15;
-    // node3._data = 23;
-
-    // node1._next = &node2;
-    // node2._next = &node3;
-    // node3._next = nullptr;
-
-    
-    while(head != nullptr)
+    while(myList != nullptr)
     {
-        cout << "head->_data: " << head->_data << endl;
-        head = head->_next;
+        Node* toBeDeleted = myList;
+        cout << "DEBUG: toBeDeleted: " << toBeDeleted << endl;
+        myList = myList->_next;
+        delete toBeDeleted;
     }
-    
-    // head = &node2; wrong way
-    // head = node1._next; also wrong way
-    // head = head->_next;
-    // cout << "head->_data: " << head->_data << endl;
-    // head = head->_next;
-    // cout << "head->_data: " << head->_data << endl;
-    // head = head->_next;
-    // cout << "head->_data: " << head->_data << endl;
+
     return 0;
+}
+
+void buildList(Node **myList)
+{
+    for(int i = 0; i < 5; i++)
+    {
+        int num1;
+        Node* newNode = new Node;
+        cout << "DEBUG: newNode: " << newNode << endl;
+
+        cout << "Enter a number: ";
+        cin >> num1;
+
+        newNode->_data = num1;
+        newNode->_next = nullptr;
+
+        if(myList == nullptr)
+        {
+            myList = &newNode;
+            continue;
+        }
+
+        Node* cNode = *myList;
+        while(cNode->_next != nullptr)
+        {
+            cNode = cNode->_next;
+        }
+        cNode->_next = newNode;
+    }
+
 }
