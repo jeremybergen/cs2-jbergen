@@ -6,6 +6,7 @@ struct Node
 {
     int _data;
     Node* _next;
+    Node* _prev;
 };
 
 void buildList(Node**);
