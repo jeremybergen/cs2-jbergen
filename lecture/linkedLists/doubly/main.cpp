@@ -56,6 +56,17 @@ class List
         _head = nullptr;
         _tail = nullptr;
     }
+    ~List<T1>()
+    {
+        cout << "Freeing memory" << endl;
+        while(_head != nullptr)
+        {
+            Node<T1>* toBeDeleted = _head;
+            _head = _head->getNext();
+            delete toBeDeleted;
+        }
+        _tail = nullptr;
+    }
     Node<T1>* getHead()
     {
         return _head;
@@ -76,6 +87,7 @@ class List
         {
             _head = newNode;
             _tail = newNode;
+            return;
         }
         Node<T1>* cNode = _head;
         while(cNode->getNext() != nullptr && cNode->getData() < data)
@@ -109,9 +121,13 @@ class List
             }
             else
             {
-                _tail = newNode;
-                _tail->setPrev(cNode);
-                cNode->setNext(_tail);
+                // _tail = newNode;
+                // _tail->setPrev(cNode);
+                // cNode->setNext(_tail);
+                newNode->setPrev(cNode);
+                newNode->setNext(cNode->getNext());
+                cNode->setNext(newNode);
+                newNode->getNext()->setPrev(newNode);
             }
             return;
         }
@@ -126,7 +142,11 @@ class List
             }
             else
             {
-                _tail.getPrev().setNext(newNode);
+                newNode->setPrev(cNode->getPrev());
+                newNode->setNext(cNode);
+                newNode->getPrev()->setNext(newNode);
+                newNode->getNext()->setPrev(newNode);
+                // _tail.getPrev().setNext(newNode);
                 // _tail.setPrev(newNode);
                 // newNode.setNext(_tail);
             }
@@ -134,8 +154,34 @@ class List
         }
         
         //at middle
+        newNode->setPrev(cNode->getPrev());
+        newNode->setNext(cNode);
+        cNode->getPrev()->setNext(newNode);
+        cNode->setPrev(newNode);
 
         
+    }
+
+    void printList()
+    {
+        Node<T1>* curNode = _head;
+        while(curNode != nullptr)
+        {
+            cout << curNode->getData() << " ";
+            curNode = curNode->getNext();
+        }
+        cout << endl;
+    }
+
+    void printRList()
+    {
+        Node<T1>* curNode = _tail;
+        while(curNode != nullptr)
+        {
+            cout << curNode->getData() << " ";
+            curNode = curNode->getPrev();
+        }
+        cout << endl;
     }
 };
 
@@ -143,9 +189,22 @@ int main(int argc, char* argv[])
 {
     List<int> mylist1;
 
-    mylist1.addData(42);
-    mylist1.addData(15);
-    mylist1.addData(23);
+    // mylist1.addData(42);
+    // mylist1.addData(15);
+    // mylist1.addData(23);
+    int inNumber = 0;
+    while(inNumber != -999)
+    {
+        cout << "Enter a number, -999 to quit: ";
+        cin >> inNumber;
+        mylist1.addData(inNumber);
+        mylist1.printList();
+    }
+
+    cout << "Increasing: ";
+    mylist1.printList();
+    cout << "Decreasing: ";
+    mylist1.printRList();
 
     return 0;
 }
