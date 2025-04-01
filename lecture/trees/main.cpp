@@ -73,6 +73,12 @@ int main(int argc, char* argv[])
     cout << "Deleting 42" << endl;
     myTree.remove(42);
 
+    cout << "Deleting 150" << endl;
+    myTree.remove(150);
+
+    cout << "Deleting 100" << endl;
+    myTree.remove(100);
+
     myTree.inOrder();
     return 0;
 }
@@ -104,31 +110,36 @@ Node<T1>* Tree<T1>::removeNode(T1 data, Node<T1>* root)
     {
         if(root->getLeft() == root->getRight())
         {
-            cout << "Deleting: " << root << endl;
+            // cout << "Deleting: " << root << endl;
             delete root;
             return nullptr;
         }
-        if(root->getLeft() != nullptr)
+        else if(root->getLeft() != nullptr && root->getRight() == nullptr)
         {
             // return root->getLeft();
-            cout << "DEBUG: root->getLeft() != nullptr" << endl;
+            // cout << "DEBUG: root->getLeft() != nullptr" << endl;
             Node<T1>* leftNode = root->getLeft();
-            cout << "root: " << root << endl;
+            // cout << "root: " << root << endl;
             delete root;
             return leftNode;
         }
-        if(root->getRight() != nullptr)
+        else if(root->getRight() != nullptr && root->getLeft() == nullptr)
         {
             // return root->getLeft();
-            cout << "DEBUG: root->getRight() != nullptr" << endl;
+            // cout << "DEBUG: root->getRight() != nullptr" << endl;
             Node<T1>* rightNode = root->getRight();
-            cout << "root: " << root << endl;
+            // cout << "root: " << root << endl;
             delete root;
             return rightNode;
         }
-        Node<T1>* largest = maxVal(root->getLeft());
-        root->setData(largest->getData());
-        removeNode(largest->getData(), root->getLeft());
+        else
+        {
+            // cout << "DEBUG: finding largest node" << endl;
+            Node<T1>* largest = maxVal(root->getLeft());
+            // cout << "DEBUG: largest: " << largest->getData() << ", root: " << root->getData() << endl;
+            root->setData(largest->getData());
+            root->setLeft(removeNode(largest->getData(), root->getLeft()));
+        }
     }
 
     return root;
@@ -138,6 +149,7 @@ template <class T1>
 void Tree<T1>::remove(T1 data)
 {
     _root = removeNode(data, _root);
+    // cout << "_root: " << &_root << endl;
 }
 
 template <class T1>
@@ -156,6 +168,7 @@ void Tree<T1>::deleteTree(Node<T1>* root)
 template <class T1>
 Tree<T1>::~Tree()
 {
+    cout << "_root->getData(): " << _root->getData() << endl;
     deleteTree(_root);
 }
 
