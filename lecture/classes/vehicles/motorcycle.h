@@ -1,18 +1,19 @@
 #pragma once
 #include <string>
+#include "vehicle.h"
 
 using namespace std;
 
 // Motorcycle class
-class Motorcycle
+class Motorcycle : public Vehicle
 {
     // private attributes for every motorcycle instance
     private:
-        string _make;
-        string _model;
-        string _color;
+        // string _make;
+        // string _model;
+        // string _color;
         float _engineSize;
-        int _numTires;
+        // int _numTires;
 
     // public methods for every instance of motorcycle
     public:
@@ -28,15 +29,15 @@ class Motorcycle
 
         // Setter
         
-        /// @brief This function sets the model of a motorcycle
-        /// @param  string model
-        void setModel(string);
+        // /// @brief This function sets the model of a motorcycle
+        // /// @param  string model
+        // void setModel(string);
 
         // Getters
 
-        /// @brief This function returns the model of the motorcycle
-        /// @return string
-        string getModel();
+        // /// @brief This function returns the model of the motorcycle
+        // /// @return string
+        // string getModel();
 
         /// @brief Creates and returns formatted string for motorcycle instance
         /// @return string

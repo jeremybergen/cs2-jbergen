@@ -16,5 +16,8 @@ int main(int argc, char* argv[])
 
     cout << truck1.print() << endl;
     cout << mc1.print() << endl;
+
+    mc1.setModel("Civic");
+    cout << mc1.print() << endl;
     return 0;
 }

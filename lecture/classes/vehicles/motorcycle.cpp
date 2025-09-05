@@ -26,21 +26,21 @@ Motorcycle::Motorcycle(string make, string model, string color, float engineSize
 
 // Setter
 
-/// @brief This function sets the model of a motorcycle
-/// @param  string model
-void Motorcycle::setModel(string model)
-{
-    _model = model;
-}
+// /// @brief This function sets the model of a motorcycle
+// /// @param  string model
+// void Motorcycle::setModel(string model)
+// {
+//     _model = model;
+// }
 
 // Getters
 
-/// @brief This function returns the model of the motorcycle
-/// @return string
-string Motorcycle::getModel()
-{
-    return _model;
-}
+// /// @brief This function returns the model of the motorcycle
+// /// @return string
+// string Motorcycle::getModel()
+// {
+//     return _model;
+// }
 
 /// @brief Creates and returns formatted string for motorcycle instance
 /// @return string

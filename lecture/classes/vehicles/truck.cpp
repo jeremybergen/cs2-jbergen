@@ -21,23 +21,23 @@ Truck::Truck(string make, string model, string color, int numTires)
     _numTires = numTires;
 }
 
-// Setter
+// // Setter
 
-/// @brief This function sets the model of a truck
-/// @param  string model
-void Truck::setModel(string model)
-{
-    _model = model;
-}
+// /// @brief This function sets the model of a truck
+// /// @param  string model
+// void Truck::setModel(string model)
+// {
+//     _model = model;
+// }
 
-// Getters
+// // Getters
 
-/// @brief This function returns the model of the truck
-/// @return string
-string Truck::getModel()
-{
-    return _model;
-}
+// /// @brief This function returns the model of the truck
+// /// @return string
+// string Truck::getModel()
+// {
+//     return _model;
+// }
 
 /// @brief Creates and returns formatted string for truck instance
 /// @return string
