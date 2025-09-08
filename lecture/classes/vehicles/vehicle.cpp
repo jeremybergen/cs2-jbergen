@@ -1,4 +1,5 @@
 #include "vehicle.h"
+#include <iostream>
 
 Vehicle::Vehicle()
 {
@@ -18,7 +19,12 @@ Vehicle::Vehicle(string make, string model, string color, int numTires)
     _make = make;
     _model = model;
     _color = color;
-    _numTires = numTires;
+    // _numTires = numTires;
+    if(numTires < 1) 
+    {
+        cerr << "Invalid number of tires" << endl;
+        _numTires = 2;
+    }
 }
 
 /// @brief This function sets the model of a vehicle

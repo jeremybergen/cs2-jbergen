@@ -16,14 +16,14 @@ class Truck : private Vehicle
 
     // public methods for every instance of truck
     public:
-        /// @brief Default constructor
-        Truck();
+        // /// @brief Default constructor
+        // Truck();
         /// @brief Parameterized constructor
         /// @param  string make
         /// @param  string model
         /// @param  string color
         /// @param  int numTires
-        Truck(string, string, string, int);
+        Truck(string = "Toyota", string = "Tundra", string = "Red", int = 0);
 
         // // Setter
         

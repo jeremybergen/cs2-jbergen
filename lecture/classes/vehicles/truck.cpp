@@ -1,24 +1,24 @@
 #include "truck.h"
 
-/// @brief Default constructor
-Truck::Truck()
-{
-    _make = "";
-    _model = "";
-    _color = "";
-    _numTires = 0;
-}
+// /// @brief Default constructor
+// Truck::Truck()
+// {
+//     _make = "";
+//     _model = "";
+//     _color = "";
+//     _numTires = 0;
+// }
 /// @brief Parameterized constructor
 /// @param  string make
 /// @param  string model
 /// @param  string color
 /// @param  int numTires
-Truck::Truck(string make, string model, string color, int numTires)
+Truck::Truck(string make, string model, string color, int numTires) : Vehicle(make, model, color, numTires)
 {
-    _make = make;
-    _model = model;
-    _color = color;
-    _numTires = numTires;
+    // _make = make;
+    // _model = model;
+    // _color = color;
+    // _numTires = numTires;
 }
 
 // // Setter
