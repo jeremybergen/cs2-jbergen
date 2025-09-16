@@ -29,8 +29,12 @@ int main(int argc, char* argv[])
 template <class T1>
 void printVector(vector<T1> vec1)
 {
-    for(auto elem : vec1)
+    for(auto it = vec1.rbegin(); it != vec1.rend(); it++)
     {
-        cout << elem << endl;
+        cout << *it << endl;
     }
+    // for(auto elem : vec1)
+    // {
+    //     cout << elem << endl;
+    // }
 }
