@@ -114,6 +114,6 @@ Rectangle::Rectangle(int side1, int side2)
 
 Rectangle Rectangle::operator+(const Rectangle& rhs)
 {
-    Rectangle r1(_side1 + rhs._side1, _side2 + rhs._side2);
+    Rectangle r1(this->_side1 + rhs._side1, this->_side2 + rhs._side2);
     return r1;
 }
