@@ -6,96 +6,79 @@ struct Node
 {
     int _data;
     Node* _next;
-    Node* _prev;
 };
 
-void createList(Node**, Node**);
 void printList(Node*);
-void deleteList(Node*);
+void insertNode(Node**, int);
 
 int main(int argc, char* argv[])
 {
-    // Node n1;
-    // Node n2;
-    // Node n3;
     Node* head = nullptr;
-    Node* tail = nullptr;
-
-    createList(&head, &tail);
-
-    // n1._data = 42;
-    // n2._data = 15;
-    // n3._data = 23;
-
-    // n1._next = &n2;
-    // n2._next = &n3;
-    // n3._next = nullptr;
-    // head = &n1;
-
-    // cout << n1._data << " " << n2._data << " " << n3._data << endl;
-    printList(head);
-
-    deleteList(head);
-    
-    return 0;
-}
-
-void createList(Node** head, Node** tail)
-{
-    Node* head = nullptr;
-    Node* tail = nullptr;
     int inData = 0;
 
     while(inData != -999)
     {
-        cout << "Enter a number or -999 to quit: ";
+        cout << "Enter a number, -999 to quit: ";
         cin >> inData;
-        if(inData == -999) break;
-        Node* newNode = new Node;
-        newNode->_data = inData;
-        newNode->_next = nullptr;
-        newNode->_prev = nullptr;
-
-        // list is empty
-        if(head == nullptr)
-        {
-            head = &newNode;
-            tail = &newNode;
-        }
-        else //list is not empty
-        {
-            Node* curNode = *head;
-            while(curNode->_next != nullptr)
-            {
-                curNode = curNode->_next;
-            }
-            curNode->_next = newNode;
-            newNode->_prev = curNode;
-            tail = &newNode;
-        }    
+        insertNode(&head, inData);
     }
-    // return head;
+
+    return 0;
+}
+
+void insertNode(Node** head, int inData)
+{
+    Node* newNode = new Node{inData, nullptr};
+
+    //list is empty
+    if (*head == nullptr)
+    {
+        *head = newNode;
+        // This is incorrect because changes are lost after function exits
+        // because you're modifying **head which is pass-by-value
+        // head = &newNode;
+    }
+
+    // Find where we need to go to insert newNode
+    Node* curNode = *head;
+    //                              (*(*curNode)._next)._data
+    while(curNode->_next != nullptr && curNode->_next->_data < inData)
+    {
+        curNode = curNode->_next;
+    }
+
+    if(curNode->_data > inData)
+    {
+        *head = newNode;
+        newNode->_next = curNode;
+    }
+    else
+    {
+        // We are inserting the node after curNode
+        if(curNode->_next == nullptr)
+        {
+            // at the end of the list
+            curNode->_next = newNode;
+        }
+        else
+        {
+            // not at the end of the list
+            newNode->_next = curNode->_next;
+            curNode->_next = newNode;
+        }
+    }
+
+    
+
+    
 }
 
 void printList(Node* head)
 {
-    Node* curNode = head;
-    while(curNode != nullptr)
-    {
-        cout << curNode->_data << " ";
-        curNode = curNode->_next;
-    }
-    cout << endl;
-}
-
-void deleteList(Node* head)
-{
-    Node* toBeDeleted = head;
     while(head != nullptr)
     {
+        cout << head->_data << " ";
         head = head->_next;
-        cout << "deleting: " << toBeDeleted << endl;
-        delete toBeDeleted;
-        toBeDeleted = head;
     }
+    cout << endl;
 }
