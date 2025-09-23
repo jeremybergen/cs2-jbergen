@@ -10,6 +10,7 @@ struct Node
 
 void printList(Node*);
 void insertNode(Node**, int);
+void deleteNode(Node**, int);
 
 int main(int argc, char* argv[])
 {
@@ -20,20 +21,34 @@ int main(int argc, char* argv[])
     {
         cout << "Enter a number, -999 to quit: ";
         cin >> inData;
+        if(inData == -999) break;
         insertNode(&head, inData);
     }
 
+    printList(head);
+
     return 0;
+}
+
+void deleteNode(Node** head, int data)
+{
+    Node* toBeDeleted = *head;
+    while(toBeDeleted->_next != nullptr && toBeDeleted->_next->_data < data)
+    {
+        toBeDeleted = toBeDeleted->_next;
+    }
 }
 
 void insertNode(Node** head, int inData)
 {
     Node* newNode = new Node{inData, nullptr};
-
+    // cout << "DEUBG: " << newNode->_data << endl;
     //list is empty
+    // cout << "*head: " << *head << endl;
     if (*head == nullptr)
     {
         *head = newNode;
+        return;
         // This is incorrect because changes are lost after function exits
         // because you're modifying **head which is pass-by-value
         // head = &newNode;
@@ -46,9 +61,11 @@ void insertNode(Node** head, int inData)
     {
         curNode = curNode->_next;
     }
+    // cout << "curNode: " << curNode << endl;
 
     if(curNode->_data > inData)
     {
+        // This is a new head
         *head = newNode;
         newNode->_next = curNode;
     }
@@ -67,10 +84,6 @@ void insertNode(Node** head, int inData)
             curNode->_next = newNode;
         }
     }
-
-    
-
-    
 }
 
 void printList(Node* head)
