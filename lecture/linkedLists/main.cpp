@@ -27,16 +27,72 @@ int main(int argc, char* argv[])
 
     printList(head);
 
+    inData = 0;
+    while(inData != -999)
+    {
+        cout << "Enter a number to delete, -999 to quit: ";
+        cin >> inData;
+        if(inData == -999) break;
+        deleteNode(&head, inData);
+        printList(head);
+    }
+
     return 0;
 }
 
 void deleteNode(Node** head, int data)
 {
-    Node* toBeDeleted = *head;
-    while(toBeDeleted->_next != nullptr && toBeDeleted->_next->_data < data)
+    if(*head == nullptr)
     {
-        toBeDeleted = toBeDeleted->_next;
+        cout << "List is empty" << endl;
+        return;
     }
+    Node* prevNode = *head;
+    while(prevNode->_next != nullptr && prevNode->_next->_data < data)
+    {
+        prevNode = prevNode->_next;
+    }
+    Node* toBeDeleted = prevNode->_next;
+    if(toBeDeleted == nullptr)
+    {
+        // Only one node in list
+        if(prevNode->_data == data)
+        {
+            cout << "prevNode: " << prevNode << endl;
+            delete prevNode;
+            *head = nullptr;
+        }
+        else
+        {
+            cout << "Number not found" << endl;
+            
+        }
+        // return;
+    }
+    else
+    {
+        // Many nodes checking data
+        if(prevNode->_data == data)
+        {
+            // we are at the head
+            *head = prevNode->_next;
+            cout << "prevNode: " << prevNode << endl;
+            delete prevNode;
+            return;
+        }
+        if(toBeDeleted->_data == data)
+        {
+            prevNode->_next = toBeDeleted->_next;
+            cout << "toBeDeleted: " << toBeDeleted << endl;
+            delete toBeDeleted;
+        }
+        else
+        {
+            cout << "Number not found" << endl;
+        }
+    }
+    
+    // delete toBeDeleted;
 }
 
 void insertNode(Node** head, int inData)
