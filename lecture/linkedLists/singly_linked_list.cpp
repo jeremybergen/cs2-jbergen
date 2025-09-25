@@ -2,43 +2,37 @@
 
 using namespace std;
 
-template <class T1>
 struct Node
 {
-    T1 _data;
-    Node<T1>* _next;
+    int _data;
+    Node* _next;
 };
 
-template <class T1>
-void printList(Node<T1>*);
-
-template <class T1>
-void insertNode(Node<T1>**, T1);
-
-template <class T1>
-void deleteNode(Node<T1>**, T1);
+void printList(Node*);
+void insertNode(Node**, int);
+void deleteNode(Node**, int);
 
 int main(int argc, char* argv[])
 {
-    Node<string>* head = nullptr;
-    string inData = "";
+    Node* head = nullptr;
+    int inData = 0;
 
-    while(inData != "-999")
+    while(inData != -999)
     {
         cout << "Enter a number, -999 to quit: ";
         cin >> inData;
-        if(inData == "-999") break;
+        if(inData == -999) break;
         insertNode(&head, inData);
     }
 
     printList(head);
 
-    inData = "";
-    while(inData != "-999")
+    inData = 0;
+    while(inData != -999)
     {
         cout << "Enter a number to delete, -999 to quit: ";
         cin >> inData;
-        if(inData == "-999") break;
+        if(inData == -999) break;
         deleteNode(&head, inData);
         printList(head);
     }
@@ -46,20 +40,19 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-template <class T1>
-void deleteNode(Node<T1>** head, T1 data)
+void deleteNode(Node** head, int data)
 {
     if(*head == nullptr)
     {
         cout << "List is empty" << endl;
         return;
     }
-    Node<T1>* prevNode = *head;
+    Node* prevNode = *head;
     while(prevNode->_next != nullptr && prevNode->_next->_data < data)
     {
         prevNode = prevNode->_next;
     }
-    Node<T1>* toBeDeleted = prevNode->_next;
+    Node* toBeDeleted = prevNode->_next;
     if(toBeDeleted == nullptr)
     {
         // Only one node in list
@@ -102,10 +95,9 @@ void deleteNode(Node<T1>** head, T1 data)
     // delete toBeDeleted;
 }
 
-template <class T1>
-void insertNode(Node<T1>** head, T1 inData)
+void insertNode(Node** head, int inData)
 {
-    Node<T1>* newNode = new Node<T1>{inData, nullptr};
+    Node* newNode = new Node{inData, nullptr};
     // cout << "DEUBG: " << newNode->_data << endl;
     //list is empty
     // cout << "*head: " << *head << endl;
@@ -119,7 +111,7 @@ void insertNode(Node<T1>** head, T1 inData)
     }
 
     // Find where we need to go to insert newNode
-    Node<T1>* curNode = *head;
+    Node* curNode = *head;
     //                              (*(*curNode)._next)._data
     while(curNode->_next != nullptr && curNode->_next->_data < inData)
     {
@@ -150,8 +142,7 @@ void insertNode(Node<T1>** head, T1 inData)
     }
 }
 
-template <class T1>
-void printList(Node<T1>* head)
+void printList(Node* head)
 {
     while(head != nullptr)
     {
