@@ -31,5 +31,6 @@ int main(int argc, char* argv[])
     myList.insert(MyClass(23, 23.7894321));
 
     cout << myList << endl;
+    cout << myList << endl;
     return 0;
 }

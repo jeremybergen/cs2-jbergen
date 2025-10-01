@@ -116,7 +116,7 @@ class List
 
         }
 
-        friend ostream& operator<<(ostream& os, List<T1> l)
+        friend ostream& operator<<(ostream& os, const List<T1>& l)
         {
             Node<T1>* curNode = l._head;
             while(curNode != nullptr)
