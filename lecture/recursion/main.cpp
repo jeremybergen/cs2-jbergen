@@ -2,99 +2,72 @@
 
 using namespace std;
 
-void printTriangle(int);
-void printRevTriangle(int);
-
-void printTriangleRec(int);
-void printRevTriangleRec(int);
-
-void printStars(int);
+int fib(int);
+size_t factorial(int);
+void reverseString(string, int);
+int power(int, int);
 
 int main(int argc, char* argv[])
 {
-    int numLines;
-    cout << "Enter number of lines: ";
-    cin >> numLines;
+    int base, exp;
 
-    printTriangle(numLines);
-    cout << endl;
-    printTriangleRec(numLines);
-    cout << endl;
-    printRevTriangleRec(numLines);
-    cout << endl;
-    printRevTriangle(numLines);
+    cout << "Enter the base and exponent separated by a space: ";
+    cin >> base >> exp;
+
+    cout << base << " raised to the power of " << exp << " is: " << power(base, exp) << endl;
+
+    // reverse string recursion
+    // string inStr;
+
+    // cout << "Enter string to reverse: ";
+    // getline(cin, inStr);
+
+    // reverseString(inStr, inStr.length()-1);
+    // cout << endl;
+
+    // factorial recursion
+    // int factNum;
+
+    // cout << "Enter the number to calculate: ";
+    // cin >> factNum;
+
+    // cout << "The " << factNum << " factorial is: " << factorial(factNum) << endl;
+
+    // fibonacci recursion
+    // int fibNum;
+
+    // cout << "Enter the fibonacci number: ";
+    // cin >> fibNum;
+
+    // cout << "The " << fibNum << " fibonacci number is : " << fib(fibNum) << endl;
     return 0;
 }
 
-void printStars(int n)
+int power(int base, int exp)
 {
-    for(int i = 0; i < n; i++)
-    {
-        cout << "*";
-    }
-    cout << endl;
+    if(exp == 0) return 1;
+
+    return base * power(base, exp-1);
 }
 
-/// @brief prints triangle, using recursion, like:
-/// *
-/// **
-/// ***
-/// ****
-/// @param n number of lines for triangle
-void printTriangleRec(int n)
+void reverseString(string str, int idx)
 {
-    if(n <= 0) return;
+    if(idx < 0) return;
 
-    printTriangleRec(n-1);
-    printStars(n);
+    cout << str.at(idx);
+    reverseString(str, idx-1);
 }
 
-/// @brief prints reverse triangle, using recursion, like:
-/// ****
-/// ***
-/// **
-/// *
-/// @param n number of lines for triangle
-void printRevTriangleRec(int n)
+size_t factorial(int n)
 {
-    if(n <= 0) return;
-
-    printStars(n);
-    printRevTriangleRec(n-1);
+    if(n <= 1) return 1;
+    
+    return n * factorial(n-1);
 }
 
-/// @brief prints triangle like:
-/// *
-/// **
-/// ***
-/// ****
-/// @param n number of lines for triangle
-void printTriangle(int n)
+int fib(int n)
 {
-    for(int i = 0; i < n; i++)
-    {
-        for(int j = 0; j < i+1; j++)
-        {
-            cout << "*";
-        }
-        cout << endl;
-    }
-}
+    if(n <= 1) return n;
 
-/// @brief prints reverse triangle like:
-/// ****
-/// ***
-/// **
-/// *
-/// @param n number of lines for triangle
-void printRevTriangle(int n)
-{
-    for(int i = 0; i <= n; i++)
-    {
-        for(int j = n-i; j > 0; j--)
-        {
-            cout << "*";
-        }
-        cout << endl;
-    }
+    return fib(n-1) + fib(n-2);
 }
