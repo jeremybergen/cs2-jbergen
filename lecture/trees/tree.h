@@ -12,6 +12,7 @@ class Tree
         Node<T1>* insertNode(Node<T1>* root, T1);
         Node<T1>* searchNode(Node<T1>* root, T1 data);
         Node<T1>* removeNode(Node<T1>* root, T1 data);
+        Node<T1>* minVal(Node<T1>*);
         void inOrderPrint(Node<T1>*);
         void destroyTree(Node<T1>*);
     public:
@@ -112,14 +113,69 @@ Node<T1>* Tree<T1>::searchNode(Node<T1>* root, T1 data)
 }
 
 template <class T1>
+Node<T1>* Tree<T1>::minVal(Node<T1>* root)
+{
+    Node<T1>* curNode = root;
+    while(curNode->getLeft() != nullptr)
+    {
+        curNode = curNode->getLeft();
+    }
+    std::cout << curNode->getData() << std::endl;
+    return curNode; 
+}
+
+template <class T1>
 Node<T1>* Tree<T1>::removeNode(Node<T1>* root, T1 data)
 {
-    if(root == nullptr) return;
-    
+    if(root == nullptr) return root;
+
+    if(data < root->getData())
+    {
+        root->setLeft(removeNode(root->getLeft(), data));
+    }
+    else if( data > root->getData())
+    {
+        root->setRight(removeNode(root->getRight(), data));
+    }
+    else
+    {
+        if(root->getLeft() == root->getRight())
+        {
+            // leaf node;
+            delete root;
+            return nullptr;
+        }
+        else if(root->getLeft() != nullptr && root->getRight() == nullptr)
+        {
+            // left has node, right is null
+            Node<T1>* tmpNode = root->getLeft();
+            delete root;
+            return tmpNode;
+        }
+        else if(root->getRight() != nullptr && root->getLeft() == nullptr)
+        {
+            // right has node, left is null
+            Node<T1>* tmpNode = root->getRight();
+            delete root;
+            return tmpNode;
+        }
+        else
+        {
+            // both have node
+            Node<T1>* tmpNode = minVal(root->getRight());
+            tmpNode->setLeft(root->getLeft());
+            tmpNode->setRight(root->getRight());
+            delete root;
+            return tmpNode;
+        }
+    }
+    return root;
 }
 
 template <class T1>
 void Tree<T1>::remove(T1 data)
 {
+    // Node<T1>* toBeRemoved = searchNode(_root, data);
     _root = removeNode(_root, data);
+    std::cout << "updated root" << std::endl;
 }
