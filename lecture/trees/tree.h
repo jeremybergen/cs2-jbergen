@@ -145,29 +145,32 @@ Node<T1>* Tree<T1>::removeNode(Node<T1>* root, T1 data)
             delete root;
             return nullptr;
         }
-        else if(root->getLeft() != nullptr && root->getRight() == nullptr)
+        else if(root->getRight() == nullptr)
         {
             // left has node, right is null
             Node<T1>* tmpNode = root->getLeft();
             delete root;
             return tmpNode;
         }
-        else if(root->getRight() != nullptr && root->getLeft() == nullptr)
+        else if(root->getLeft() == nullptr)
         {
             // right has node, left is null
             Node<T1>* tmpNode = root->getRight();
             delete root;
             return tmpNode;
         }
-        else
-        {
-            // both have node
-            Node<T1>* tmpNode = minVal(root->getRight());
-            tmpNode->setLeft(root->getLeft());
-            tmpNode->setRight(root->getRight());
-            delete root;
-            return tmpNode;
-        }
+        // both have node
+        Node<T1>* tmpNode = minVal(root->getRight());
+
+        root->setData(tmpNode->getData());
+
+        root->setRight(removeNode(root->getRight(), tmpNode->getData()));
+
+        // BAD DON'T DO!!!!
+        // tmpNode->setLeft(root->getLeft());
+        // tmpNode->setRight(root->getRight());
+        // delete root;
+        // return tmpNode;
     }
     return root;
 }
