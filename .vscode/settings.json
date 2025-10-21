@@ -5,6 +5,7 @@
         "new": "cpp",
         "istream": "cpp",
         "iosfwd": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "queue": "cpp"
     }
 }
