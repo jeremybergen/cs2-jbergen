@@ -21,6 +21,23 @@ class Queue
 
 int main(int argc, char* argv[])
 {
+    Queue myQueue;
+
+    while(true)
+    {
+        int inNum;
+        cout << "Enter a number, -999 to quit: ";
+        cin >> inNum;
+        if(inNum == -999) break;
+        myQueue.enqueue(inNum);
+    }
+
+    while(!myQueue.empty())
+    {
+        cout << myQueue.dequeue() << " ";
+    }
+    cout << endl;
+
     return 0;
 }
 
@@ -55,6 +72,11 @@ int Queue::dequeue()
     }
     int toReturn = _queue[_beg];
     _beg++;
+    if(_beg > _end)
+    {
+        _beg = -1;
+        _end = -1;
+    }
     return toReturn;
 }
 int Queue::front()
@@ -66,7 +88,7 @@ int Queue::front()
 }
 bool Queue::full()
 {
-    if(_end == _maxQueue - 1) return true;
+    if((_end > _beg && _beg == 0 && _end == _maxQueue - 1) || (_end - _beg == -1)) return true;
     return false;
 }
 bool Queue::empty()
@@ -75,6 +97,9 @@ bool Queue::empty()
     return false;
 }
 int Queue::size()
-{
-    return _end+1;   
+{   
+    if(full()) return _maxQueue;
+    if(_end > _beg) return _end - _beg + 1;
+    if(_end < _beg) return _maxQueue - abs(_end - _beg + 1);
+    // return _end+1;
 }
