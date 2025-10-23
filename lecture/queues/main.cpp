@@ -5,7 +5,7 @@ using namespace std;
 class Queue
 {
     private:
-        static const int _maxQueue = 100;
+        static const int _maxQueue = 4;
         int _queue[_maxQueue];
         int _beg, _end;
 
@@ -32,11 +32,20 @@ int main(int argc, char* argv[])
         myQueue.enqueue(inNum);
     }
 
+    cout << myQueue.dequeue() << endl;
+
+    int inNum;
+    cout << "Enter a number, -999 to quit: ";
+    cin >> inNum;
+    myQueue.enqueue(inNum);
+
     while(!myQueue.empty())
     {
         cout << myQueue.dequeue() << " ";
     }
     cout << endl;
+
+    // cout << boolalpha << myQueue.empty() << endl;
 
     return 0;
 }
@@ -61,6 +70,7 @@ void Queue::enqueue(int data)
         return;
     }
     _end++;
+    _end = _end % _maxQueue;
     _queue[_end] = data;
 }
 int Queue::dequeue()
@@ -71,11 +81,17 @@ int Queue::dequeue()
         return -999;
     }
     int toReturn = _queue[_beg];
-    _beg++;
-    if(_beg > _end)
+
+    // _beg = _beg++ % _maxQueue;
+    if(_beg == _end)
     {
         _beg = -1;
         _end = -1;
+    }
+    else
+    {
+        _beg++;
+        _beg = _beg % _maxQueue;
     }
     return toReturn;
 }
@@ -93,6 +109,7 @@ bool Queue::full()
 }
 bool Queue::empty()
 {
+    // cout << boolalpha << (_beg == _end) << " " << (_beg == -1) << endl;
     if(_beg == _end && _beg == -1) return true;
     return false;
 }
@@ -101,5 +118,6 @@ int Queue::size()
     if(full()) return _maxQueue;
     if(_end > _beg) return _end - _beg + 1;
     if(_end < _beg) return _maxQueue - abs(_end - _beg + 1);
+    return 1;
     // return _end+1;
 }
