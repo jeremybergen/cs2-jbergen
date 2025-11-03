@@ -10,8 +10,17 @@ int main(int argc, char* argv[])
 
     for(int i = 0; i < 10; i++)
     {
-        cout << "Enter a number: ";
-        cin >> numbers[i];
+        // cout << "Enter a number: ";
+        // cin >> numbers[i];
+        if(i == 4)
+        {
+            numbers[i] = 42;
+        }
+        else
+        {
+            numbers[i] = i*10;
+        }
+        
     }
 
     cout << "Enter a number to find: ";
@@ -26,11 +35,10 @@ void binarySearch(int arr[], int arrSize, int value)
     int beg, end;
     int mid;
     bool found = false;
-    int newSize = arrSize;
     beg = 0;
     end = arrSize - 1;
 
-    while (newSize/2 >= 0)
+    while (beg <= end)
     {
         mid = (beg + end)/2;
         if(arr[mid] == value)
@@ -46,8 +54,13 @@ void binarySearch(int arr[], int arrSize, int value)
         {
             end = mid - 1;
         }
-        newSize = mid;
     }
-    
-    
+    if(found)
+    {
+        cout << "Found " << value << " at index: " << mid << endl;
+    }
+    else
+    {
+        cout << value << " not found in list" << endl;
+    }
 }
