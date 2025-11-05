@@ -11,46 +11,90 @@ bool checkArray(int[], int[], int);
 void bubbleSort(int[], int);
 void selectionSort(int[], int);
 void insertionSort(int[], int);
+void mergeSort(int[], int, int, int);
+void printMergeArray(int[], int, int, int);
+void merge(int[], int, int, int, int);
 
 int main(int argc, char* argv[])
 {
-    int arrSize = 1000;
-    int numbers[arrSize];
-    int bubbleArray[arrSize];
-    int selectionArray[arrSize];
-    int insertionArray[arrSize];
+    int numbers[8] = {42, 15, 23, 9, 87, 1, 50, 100};
+    int arrSize = 8;
+    mergeSort(numbers, arrSize, 0, arrSize - 1);
+    // int arrSize = 1000;
+    // int numbers[arrSize];
+    // int bubbleArray[arrSize];
+    // int selectionArray[arrSize];
+    // int insertionArray[arrSize];
 
-    buildArray(numbers, arrSize);
+    // buildArray(numbers, arrSize);
 
-    // printArray(numbers, arrSize);
-    // Bubble sort
-    copyArray(numbers, bubbleArray, arrSize);
-    auto start = chrono::system_clock::now();
-    bubbleSort(bubbleArray, arrSize);
-    auto end = chrono::system_clock::now();
-    auto elapsed = end - start;
-    cout << "Bubble Sort: " << elapsed.count() << endl;
-    // printArray(numbers, arrSize);
+    // // printArray(numbers, arrSize);
+    // // Bubble sort
+    // copyArray(numbers, bubbleArray, arrSize);
+    // auto start = chrono::system_clock::now();
+    // bubbleSort(bubbleArray, arrSize);
+    // auto end = chrono::system_clock::now();
+    // auto elapsed = end - start;
+    // cout << "Bubble Sort: " << elapsed.count() << endl;
+    // // printArray(numbers, arrSize);
 
-    // Selection Sort
-    copyArray(numbers, selectionArray, arrSize);
-    start = chrono::system_clock::now();
-    selectionSort(selectionArray, arrSize);
-    end = chrono::system_clock::now();
-    elapsed = end - start;
-    cout << "Selection Sort: " << elapsed.count() << endl;
-    cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, selectionArray, arrSize) << endl;
+    // // Selection Sort
+    // copyArray(numbers, selectionArray, arrSize);
+    // start = chrono::system_clock::now();
+    // selectionSort(selectionArray, arrSize);
+    // end = chrono::system_clock::now();
+    // elapsed = end - start;
+    // cout << "Selection Sort: " << elapsed.count() << endl;
+    // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, selectionArray, arrSize) << endl;
 
-    // Insertion Sort
-    copyArray(numbers, insertionArray, arrSize);
-    start = chrono::system_clock::now();
-    insertionSort(insertionArray, arrSize);
-    end = chrono::system_clock::now();
-    elapsed = end - start;
-    cout << "Insertion Sort: " << elapsed.count() << endl;
-    cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, insertionArray, arrSize) << endl;
+    // // Insertion Sort
+    // copyArray(numbers, insertionArray, arrSize);
+    // start = chrono::system_clock::now();
+    // insertionSort(insertionArray, arrSize);
+    // end = chrono::system_clock::now();
+    // elapsed = end - start;
+    // cout << "Insertion Sort: " << elapsed.count() << endl;
+    // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, insertionArray, arrSize) << endl;
 
     return 0;
+}
+
+void printMergeArray(int arr[], int arrSize, int beg, int end)
+{
+    for(int i = beg; i <= end; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void merge(int arr[], int arrSize, int beg, int mid, int end)
+{
+
+}
+
+void mergeSort(int arr[], int arrSize, int beg, int end)
+{
+    int mid = (beg + end)/2;
+    // if(end < beg) return;
+    if(arrSize < 2) 
+    {
+        merge(arr, arrSize, beg, mid, end);
+        // printMergeArray(arr, arrSize, beg, end);
+        // cout << endl;
+        return;
+    }
+    
+    mergeSort(arr, (mid + 1 - beg), beg, mid);
+    // mergeSort(arr, -(beg - mid + 1), beg, mid);
+    cout << "left split: ";
+    printMergeArray(arr, arrSize, beg, end);
+    // cout << endl;
+    mergeSort(arr, (end - mid), mid + 1, end);
+    cout << "right split: ";
+    printMergeArray(arr, arrSize, mid + 1, end);
+    // cout << endl;
+    
 }
 
 bool checkArray(int src[], int dst[], int arrSize)
