@@ -70,16 +70,49 @@ void printMergeArray(int arr[], int arrSize, int beg, int end)
 
 void merge(int arr[], int arrSize, int beg, int mid, int end)
 {
+    int n1 = mid - beg + 1;
+    int n2 = end - mid;
 
+    int left[n1], right[n2];
+
+    for(int i = 0; i < n1; i++)
+    {
+        left[i] = arr[beg + i];
+    }
+    for(int i = 0; i < n2; i++)
+    {
+        right[i] = arr[mid + 1 + i];
+    }
+
+    int leftidx = 0;
+    int rightidx = 0;
+    int beginning = beg;
+
+    while(leftidx < n1 && rightidx < n2)
+    {
+        if(left[leftidx] < right[rightidx]) 
+        {
+            arr[beginning] = left[leftidx];
+            leftidx++;
+        }
+        else
+        {
+            arr[beginning] = right[rightidx];
+            rightidx++;
+        }
+        beginning++;
+    }
+    
 }
 
 void mergeSort(int arr[], int arrSize, int beg, int end)
 {
     int mid = (beg + end)/2;
     // if(end < beg) return;
-    if(arrSize < 2) 
+    // if(arrSize < 2) 
+    if(beg >= end)
     {
-        merge(arr, arrSize, beg, mid, end);
+        
         // printMergeArray(arr, arrSize, beg, end);
         // cout << endl;
         return;
@@ -94,6 +127,8 @@ void mergeSort(int arr[], int arrSize, int beg, int end)
     cout << "right split: ";
     printMergeArray(arr, arrSize, mid + 1, end);
     // cout << endl;
+
+    merge(arr, arrSize, beg, mid, end);
     
 }
 
