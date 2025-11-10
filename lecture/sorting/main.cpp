@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,49 +15,118 @@ void insertionSort(int[], int);
 void mergeSort(int[], int, int, int);
 void printMergeArray(int[], int, int, int);
 void merge(int[], int, int, int, int);
+void quickSort(int[], int, int);
+int partition(int[], int, int);
 
 int main(int argc, char* argv[])
 {
-    int numbers[8] = {42, 15, 23, 9, 87, 1, 50, 100};
-    int arrSize = 8;
-    mergeSort(numbers, arrSize, 0, arrSize - 1);
-    // int arrSize = 1000;
-    // int numbers[arrSize];
-    // int bubbleArray[arrSize];
-    // int selectionArray[arrSize];
-    // int insertionArray[arrSize];
+    // int numbers[8] = {42, 15, 23, 9, 87, 1, 50, 100};
+    // int arrSize = 8;
+    // printArray(numbers, arrSize);
+    // mergeSort(numbers, arrSize, 0, arrSize - 1);
+    // printArray(numbers, arrSize);
 
-    // buildArray(numbers, arrSize);
+    int arrSize = 1000;
+    int numbers[arrSize];
+    int bubbleArray[arrSize];
+    int selectionArray[arrSize];
+    int insertionArray[arrSize];
+    int mergeArray[arrSize];
+    int quickArray[arrSize];
+    int stlArray[arrSize];
+    
+    buildArray(numbers, arrSize);
 
-    // // printArray(numbers, arrSize);
-    // // Bubble sort
-    // copyArray(numbers, bubbleArray, arrSize);
-    // auto start = chrono::system_clock::now();
-    // bubbleSort(bubbleArray, arrSize);
-    // auto end = chrono::system_clock::now();
-    // auto elapsed = end - start;
-    // cout << "Bubble Sort: " << elapsed.count() << endl;
-    // // printArray(numbers, arrSize);
+    // printArray(numbers, arrSize);
+    // Bubble sort
+    copyArray(numbers, bubbleArray, arrSize);
+    auto start = chrono::system_clock::now();
+    bubbleSort(bubbleArray, arrSize);
+    auto end = chrono::system_clock::now();
+    auto elapsed = end - start;
+    cout << "Bubble Sort: " << elapsed.count() << endl;
+    // printArray(numbers, arrSize);
 
-    // // Selection Sort
-    // copyArray(numbers, selectionArray, arrSize);
-    // start = chrono::system_clock::now();
-    // selectionSort(selectionArray, arrSize);
-    // end = chrono::system_clock::now();
-    // elapsed = end - start;
-    // cout << "Selection Sort: " << elapsed.count() << endl;
+    // Selection Sort
+    copyArray(numbers, selectionArray, arrSize);
+    start = chrono::system_clock::now();
+    selectionSort(selectionArray, arrSize);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Selection Sort: " << elapsed.count() << endl;
     // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, selectionArray, arrSize) << endl;
 
-    // // Insertion Sort
-    // copyArray(numbers, insertionArray, arrSize);
-    // start = chrono::system_clock::now();
-    // insertionSort(insertionArray, arrSize);
-    // end = chrono::system_clock::now();
-    // elapsed = end - start;
-    // cout << "Insertion Sort: " << elapsed.count() << endl;
+    // Insertion Sort
+    copyArray(numbers, insertionArray, arrSize);
+    start = chrono::system_clock::now();
+    insertionSort(insertionArray, arrSize);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Insertion Sort: " << elapsed.count() << endl;
     // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, insertionArray, arrSize) << endl;
 
+    // Merge Sort
+    copyArray(numbers, mergeArray, arrSize);
+    start = chrono::system_clock::now();
+    mergeSort(mergeArray, arrSize, 0, arrSize-1);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Merge Sort: " << elapsed.count() << endl;
+    // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, mergeArray, arrSize) << endl;
+
+    // Quick Sort
+    copyArray(numbers, quickArray, arrSize);
+    start = chrono::system_clock::now();
+    quickSort(quickArray, 0, arrSize-1);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Quick Sort: " << elapsed.count() << endl;
+    // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, quickArray, arrSize) << endl;
+
+    // STL Sort
+    copyArray(numbers, stlArray, arrSize);
+    start = chrono::system_clock::now();
+    // quickSort(quickArray, 0, arrSize-1);
+    stable_sort(stlArray, (stlArray+arrSize));
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "STL Sort: " << elapsed.count() << endl;
+    // cout << boolalpha << "Is array sorted? " << checkArray(bubbleArray, stlArray, arrSize) << endl;
+
     return 0;
+}
+
+void quickSort(int arr[], int beg, int end)
+{
+    if(beg >= end)
+    {
+        return;
+    }
+    int pivotIdx = partition(arr, beg, end);
+    quickSort(arr, beg, pivotIdx-1);
+    quickSort(arr, pivotIdx+1, end);
+
+}
+
+int partition(int arr[], int beg, int end)
+{
+    int pivotidx = (beg + (end-beg))/2;
+    swap(arr[pivotidx], arr[end]);
+
+    int pivot = arr[end];
+
+    int i = beg - 1;
+    for(int j = beg; j < end; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    i++;
+    swap(arr[i], arr[end]);
+    return i;
 }
 
 void printMergeArray(int arr[], int arrSize, int beg, int end)
@@ -103,6 +173,19 @@ void merge(int arr[], int arrSize, int beg, int mid, int end)
         beginning++;
     }
     
+    while(leftidx < n1)
+    {
+        arr[beginning] = left[leftidx];
+        leftidx++;
+        beginning++;
+    }
+
+    while(rightidx < n2)
+    {
+        arr[beginning] = right[rightidx];
+        rightidx++;
+        beginning++;
+    }
 }
 
 void mergeSort(int arr[], int arrSize, int beg, int end)
@@ -120,12 +203,12 @@ void mergeSort(int arr[], int arrSize, int beg, int end)
     
     mergeSort(arr, (mid + 1 - beg), beg, mid);
     // mergeSort(arr, -(beg - mid + 1), beg, mid);
-    cout << "left split: ";
-    printMergeArray(arr, arrSize, beg, end);
+    // cout << "left split: ";
+    // printMergeArray(arr, arrSize, beg, end);
     // cout << endl;
     mergeSort(arr, (end - mid), mid + 1, end);
-    cout << "right split: ";
-    printMergeArray(arr, arrSize, mid + 1, end);
+    // cout << "right split: ";
+    // printMergeArray(arr, arrSize, mid + 1, end);
     // cout << endl;
 
     merge(arr, arrSize, beg, mid, end);
