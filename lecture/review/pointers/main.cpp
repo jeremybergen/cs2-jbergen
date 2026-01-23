@@ -27,8 +27,6 @@ int main(int argc, char* argv[])
     {
         delete numbers[i];
     }
-
-    //This is a comment for the file
     
     // int num1, num2;
     // int* heapNum1 = new int;
