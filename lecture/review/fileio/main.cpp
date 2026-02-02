@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
             // default:
             //     break;
             // }
+            
             if(tokenNum == 0) person->fName = token;
             if(tokenNum == 1) person->lName = token;
             if(tokenNum == 2) person->title = token;
