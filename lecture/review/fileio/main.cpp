@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
         numPeople++;
     }
 
+    while(1) {}
     for(int i = 0; i < numPeople; i++)
     {
         cout << "Favorite Color: " << people[i]->color << endl;
