@@ -30,6 +30,8 @@ int main(int argc, char* argv[])
          << ", brand: " << marker2->getBrand() << endl;
 
     delete marker1;
+    delete marker2;
+    delete marker3;
     return 0;
 }
 

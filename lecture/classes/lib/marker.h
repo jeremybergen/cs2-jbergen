@@ -11,7 +11,7 @@ class Marker
         float _inklevel;
         string _brand;
         bool _cap;
-        int* ptr1;
+        int* _ptr1;
     public:
         // Marker();
         // Marker(string color, float inklevel, string brand, bool cap);
@@ -29,12 +29,20 @@ class Marker
         void toggleCap();
 };
 
+Marker::~Marker()
+{
+    cout << "Deleting: " << _ptr1 << endl;
+    delete _ptr1;
+    cout << "Calling destructor" << endl;
+}
+
 Marker::Marker(string color, float inklevel, string brand, bool cap)
 {
     _color = color;
     _inklevel = inklevel;
     _brand = brand;
     _cap = cap;
+    _ptr1 = new int;
     // _color = "Black";
     // _inklevel = 1.0;
     // _cap = true;
