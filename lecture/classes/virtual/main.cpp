@@ -47,12 +47,15 @@ using namespace std;
 
 class Animal
 {
+    protected:
+    Animal() {}
     public:
     virtual ~Animal() { cout << "Animal destructor" << endl;}
-    virtual void speak()
-    {
-        cout << "speaking" << endl;
-    }
+    virtual void speak(int) = 0;
+    // virtual void speak()
+    // {
+    //     cout << "speaking" << endl;
+    // }
 };
 
 class Dog : public Animal
@@ -73,17 +76,32 @@ class Cat : public Animal
     }
 };
 
+class Parrot : public Animal
+{
+    public:
+    Parrot() {}
+
+    void speak(int num)
+    {
+        cout << "Hello World" << num << endl;
+    }
+};
+
 int main(int argc, char* argv[])
 {
     // Dog* d1 = new Dog;
     Animal* a1;
-    a1 = new Dog;
-    a1->speak();
-    delete a1;
+    // a1 = new Dog;
+    // a1->speak();
+    // delete a1;
 
-    // Animal* a2;
-    a1 = new Cat;
-    a1->speak();
+    // // Animal* a2;
+    // a1 = new Cat;
+    // a1->speak();
+    // delete a1;
+
+    a1 = new Parrot;
+    a1->speak(42);
     delete a1;
     // Bclass* b1 = new Bclass(42, 15);
     // delete b1;
