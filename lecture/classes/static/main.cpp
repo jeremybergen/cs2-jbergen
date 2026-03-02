@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 using namespace std;
 
@@ -46,13 +47,35 @@ int Employee::_id = 700000000;
 
 int main(int argc, char* argv[])
 {
-    Employee emp1;
-    Employee emp2;
-    Employee emp3;
+    unsigned int number = 4294967294;
+    cout << "number: " << number << endl;
+    number++;
+    cout << "number: " << number << endl;
+    number++;
+    cout << "number: " << number << endl;
+    number++;
+    cout << "number: " << number << endl;
+    // srand(time(0));
+    // int numbers[10];
 
-    // emp1.doSomething();
-    // Employee::doSomething();
-    Employee::run(42);
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     numbers[i] = rand();
+    // }
+
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     cout << "numbers[" << i << "]: " << numbers[i] << endl;
+    // }
+    // int number = rand();
+    // cout << "number: " << number << endl;
+    // Employee emp1;
+    // Employee emp2;
+    // Employee emp3;
+
+    // // emp1.doSomething();
+    // // Employee::doSomething();
+    // Employee::run(42);
     // cout << "emp1: " << emp1.getId() << endl;
     // cout << "emp2: " << emp2.getId() << endl;
     // cout << "emp3: " << emp3.getId() << endl;

@@ -4,29 +4,39 @@ using namespace std;
 
 void someFun(int[], int);
 
+void fun1(int* n1)
+{
+    (*n1)++;
+}
+
 int main(int argc, char* argv[])
 {
-    int* numbers[10];
+    int num1;
+    num1 = 42;
+    cout << "num1: " << num1 << endl;
+    fun1(&num1);
+    cout << "num1: " << num1 << endl;
+    // int* numbers[10];
 
-    for(int i = 0; i < 10; i++)
-    {
-        numbers[i] = new int;
-    }
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     numbers[i] = new int;
+    // }
 
-    for(int i = 0; i < 10; i++)
-    {
-        *numbers[i] = i + 10;
-    }
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     *numbers[i] = i + 10;
+    // }
 
-    for(int i = 0; i < 10; i++)
-    {
-        cout << "numbers[" << i << "]: " << numbers[i] << endl;
-    }
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     cout << "numbers[" << i << "]: " << numbers[i] << endl;
+    // }
 
-    for(int i = 0; i < 10; i++)
-    {
-        delete numbers[i];
-    }
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     delete numbers[i];
+    // }
     
     // int num1, num2;
     // int* heapNum1 = new int;
