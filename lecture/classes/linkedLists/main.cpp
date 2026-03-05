@@ -15,6 +15,8 @@ void appendList(Node**, int);
 void searchList(Node**, int, Node**);
 void deleteNode(Node**, int);
 void searchDeleteNode(Node**, int, Node**);
+void insertList(Node**, int);
+void searchInsertNode(Node**, int, Node**);
 
 int main(int argc, char* argv[])
 {
@@ -34,6 +36,77 @@ int main(int argc, char* argv[])
     deleteList(head);
 
     return 0;
+}
+
+void insertList(Node** head, int data)
+{
+    Node* foundNodePrev = nullptr;
+    // cout << "DEBUG: " << "before search"
+    searchInsertNode(head, data, &foundNodePrev);
+
+    Node* newNode = new Node();
+    newNode->_data = data;
+    newNode->_next = nullptr;
+
+    // head is a nullptr
+    if(foundNodePrev == nullptr)
+    {
+        *head = newNode;
+    }
+    else if (foundNodePrev->_next == nullptr)
+    {
+        // at the end of the list
+        if(foundNodePrev->_data > data)
+        {
+            newNode->_next = *head;
+            *head = newNode;
+        }
+        else
+        {
+            foundNodePrev->_next = newNode;
+        }
+    }
+    else
+    {
+        if(foundNodePrev->_data > data)
+        {
+            newNode->_next = *head;
+            *head = newNode;
+        }
+        else
+        {
+            newNode->_next = foundNodePrev->_next;
+            foundNodePrev->_next = newNode;
+        }
+
+    }
+}
+
+void searchInsertNode(Node** head, int data, Node** foundNodePrev)
+{
+    Node* currentNode = *head;
+    cout << "DEBUG: " << "currentNode: " << currentNode << endl;
+    if(currentNode == nullptr)
+    {
+        *foundNodePrev = currentNode; 
+        return;
+    }
+    while(currentNode != nullptr && currentNode->_next != nullptr && ((currentNode)->_next)->_data < data)
+    {
+        // cout << "DEBUG: " << "currentNode->_data: " << currentNode->_data << endl;
+        currentNode = currentNode->_next;
+    }
+
+    // cout << "currentNode: " << currentNode << endl;
+    // if(currentNode->_next == nullptr)
+    // {
+    //     *foundNodePrev = nullptr;
+    // }
+    // else
+    // {
+    *foundNodePrev = currentNode;
+    // }
+
 }
 
 void deleteNode(Node** head, int data)
@@ -69,6 +142,7 @@ void searchDeleteNode(Node** head, int data, Node** foundNodePrev)
     if(currentNode->_data == data)
     {
         *foundNodePrev = currentNode; 
+        return;
     }
     while(currentNode != nullptr && currentNode->_next != nullptr && ((currentNode)->_next)->_data != data)
     {
@@ -169,7 +243,10 @@ void buildList(Node** head)
     cin >> newNumber;
     while (newNumber != -999)
     {
-        appendList(head, newNumber);
+        // appendList(head, newNumber);
+        insertList(head, newNumber);
+        // cout << "DEBUG: after insertList" << endl;
+        printList(*head);
         // cout << "*head: " << *head << endl;
         // cout << "DEBUG: " << "(*head)->_data: " << (*head)->_data << endl;
         // Node* newNode = new Node();
