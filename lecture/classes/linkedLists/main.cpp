@@ -14,6 +14,7 @@ void deleteList(Node*);
 void appendList(Node**, int);
 void searchList(Node**, int, Node**);
 void deleteNode(Node**, int);
+void searchDeleteNode(Node**, int, Node**);
 
 int main(int argc, char* argv[])
 {
@@ -28,6 +29,8 @@ int main(int argc, char* argv[])
     cin >> numToDelete;
     deleteNode(&head, numToDelete);
 
+    printList(head);
+
     deleteList(head);
 
     return 0;
@@ -35,14 +38,54 @@ int main(int argc, char* argv[])
 
 void deleteNode(Node** head, int data)
 {
-    Node** foundNode = nullptr;
-    searchList(head, data, foundNode);
+    Node* foundNodePrev = nullptr;
+    searchDeleteNode(head, data, &foundNodePrev);
+    cout << "foundNode: " << foundNodePrev << endl;
 
-    if(*foundNode == nullptr)
+    if(foundNodePrev == nullptr)
     {
         cout << "Data not found" << endl;
         return;
     }
+    else
+    {
+        if(foundNodePrev->_data == data)
+        {
+            *head = foundNodePrev->_next;
+            delete foundNodePrev;
+        }
+        else if(foundNodePrev->_next->_data == data)
+        {
+            Node* toBeDeleted = foundNodePrev->_next;
+            foundNodePrev->_next = foundNodePrev->_next->_next;
+            delete toBeDeleted;
+        }
+    }
+}
+
+void searchDeleteNode(Node** head, int data, Node** foundNodePrev)
+{
+    Node* currentNode = *head;
+    if(currentNode->_data == data)
+    {
+        *foundNodePrev = currentNode; 
+    }
+    while(currentNode != nullptr && currentNode->_next != nullptr && ((currentNode)->_next)->_data != data)
+    {
+        // cout << "DEBUG: " << "currentNode->_data: " << currentNode->_data << endl;
+        currentNode = currentNode->_next;
+    }
+
+    // cout << "currentNode: " << currentNode << endl;
+    if(currentNode->_next == nullptr)
+    {
+        *foundNodePrev = nullptr;
+    }
+    else
+    {
+        *foundNodePrev = currentNode;
+    }
+    
 }
 
 void searchList(Node** head, int data, Node** foundNode)
@@ -50,10 +93,21 @@ void searchList(Node** head, int data, Node** foundNode)
     Node* currentNode = *head;
     while(currentNode != nullptr && currentNode->_data != data)
     {
+        // cout << "DEBUG: " << "currentNode->_data: " << currentNode->_data << endl;
         currentNode = currentNode->_next;
     }
 
+    // cout << "currentNode: " << currentNode << endl;
     *foundNode = currentNode;
+    // if(currentNode == nullptr)
+    // {
+    //     foundNode = nullptr;
+    // }
+    // else
+    // {
+    //     foundNode = *currentNode;
+    // }
+    // foundNode = &currentNode;
 }
 
 void appendList(Node** head, int data)
