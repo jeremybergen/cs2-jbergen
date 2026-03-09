@@ -5,7 +5,7 @@ class Node
 {
     private:
     T1 _data;
-    Node*<T1> _next;
+    Node<T1>* _next;
 
     public:
     Node();
