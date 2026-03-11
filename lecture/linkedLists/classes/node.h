@@ -6,6 +6,7 @@ class Node
     private:
     T1 _data;
     Node<T1>* _next;
+    Node<T1>* _prev;
 
     public:
     Node();
@@ -21,6 +22,7 @@ template <class T1>
 inline Node<T1>::Node()
 {
     _next = nullptr;
+    _prev = nullptr;
 }
 
 template <class T1>

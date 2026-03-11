@@ -1,24 +1,35 @@
 #pragma once
 #include "node.h"
+#include <iostream>
+
+using namespace std;
 
 template <class T1>
 class List
 {
     private:
-    Node<T1>* _head;
+    Node<T1>* _head, _tail;
     unsigned int _listSize;
+
     public:
     List();
 
     void insert(T1);
     void print();
-
+    void delItem(T1);
+    unsigned int size() { return _listSize; }
+    bool isEmpty()
+    {
+        if(_listSize == 0) return true;
+        return false;
+    }
 };
 
 template <class T1>
 inline List<T1>::List()
 {
     _head = nullptr;
+    _tail = nullptr;
     _listSize = 0;
 }
 
@@ -32,6 +43,8 @@ inline void List<T1>::insert(T1 data)
     if(_head == nullptr)
     {
         _head = newNode;
+        _tail = newNode;
+        _listSize++;
         return;
     }
 
@@ -66,6 +79,7 @@ inline void List<T1>::insert(T1 data)
         newNode->setNext(currentNode->getNext());
         currentNode->setNext(newNode);
     }
+    _listSize++;
 }
 
 template <class T1>
@@ -78,4 +92,42 @@ inline void List<T1>::print()
         currentNode = currentNode->getNext();
     }
     std::cout << std::endl;
+}
+
+template <class T1>
+inline void List<T1>::delItem(T1 data)
+{
+    Node<T1>* currentNode = _head;
+
+    if (_head == nullptr)
+    {
+        return;
+    }
+
+    while(currentNode->getNext() != nullptr && data > currentNode->getNext()->getData())
+    {
+        currentNode = currentNode->getNext();
+    }
+
+    if(currentNode == _head && currentNode->getData() == data)
+    {
+        _head = _head->getNext();
+        delete currentNode;
+        _listSize--;
+    }
+    else if(currentNode->getNext() != nullptr && currentNode->getNext()->getData() == data)
+    {
+        Node<T1>* toBeDeleted = currentNode->getNext();
+        currentNode->setNext(currentNode->getNext()->getNext());
+        delete toBeDeleted;
+        _listSize--;
+    }
+    // else if(currentNode->getNext() != nullptr && currentNode->getNext()->_data != data)
+    // {
+    //     cout << "Data does not exist in list" << endl;
+    // }
+    else
+    {
+        cout << "Data does not exist in list" << endl;
+    }
 }
