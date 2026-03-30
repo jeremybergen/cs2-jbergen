@@ -23,14 +23,14 @@ int main(int argc, char* argv[])
 
     myList->print();
 
-    while(!myList->isEmpty())
-    {
-        cout << "Enter a number to delete: ";
-        cin >> insertNumber;
+    // while(!myList->isEmpty())
+    // {
+    //     cout << "Enter a number to delete: ";
+    //     cin >> insertNumber;
 
-        myList->delItem(insertNumber);
-        myList->print();
-    }
+    //     myList->delItem(insertNumber);
+    //     myList->print();
+    // }
 
 
     delete myList;

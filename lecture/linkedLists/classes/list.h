@@ -10,9 +10,11 @@ class List
     private:
     Node<T1>* _head, _tail;
     unsigned int _listSize;
+    void printList(Node<T1>*);
 
     public:
     List();
+    ~List();
 
     void insert(T1);
     void print();
@@ -29,8 +31,21 @@ template <class T1>
 inline List<T1>::List()
 {
     _head = nullptr;
-    _tail = nullptr;
+    // _tail = nullptr;
     _listSize = 0;
+}
+
+template <class T1>
+List<T1>::~List()
+{
+    Node<T1>* toBeDeleted = _head;
+    while(_head != nullptr)
+    {
+        cout << "deleting: " << toBeDeleted << endl;
+        _head = _head->getNext();
+        delete toBeDeleted;
+        toBeDeleted = _head;
+    }
 }
 
 template <class T1>
@@ -43,7 +58,7 @@ inline void List<T1>::insert(T1 data)
     if(_head == nullptr)
     {
         _head = newNode;
-        _tail = newNode;
+        // _tail = newNode;
         _listSize++;
         return;
     }
@@ -85,13 +100,23 @@ inline void List<T1>::insert(T1 data)
 template <class T1>
 inline void List<T1>::print()
 {
-    Node<T1>* currentNode = _head;
-    while(currentNode != nullptr)
-    {
-        std::cout << currentNode->getData() << " ";
-        currentNode = currentNode->getNext();
-    }
+    // Node<T1>* currentNode = _head;
+    // while(currentNode != nullptr)
+    // {
+    //     std::cout << currentNode->getData() << " ";
+    //     currentNode = currentNode->getNext();
+    // }
+    // std::cout << std::endl;
+    printList(_head);
     std::cout << std::endl;
+}
+
+template<class T1>
+void List<T1>::printList(Node<T1>* curNode)
+{
+    if(curNode == nullptr) return;
+    std::cout << curNode->getData() << " ";
+    printList(curNode->getNext());
 }
 
 template <class T1>

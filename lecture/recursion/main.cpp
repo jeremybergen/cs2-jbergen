@@ -80,12 +80,27 @@ int promptNum(int n)
     return n;
 }
 
+void hanoi(int n, string from, string end, string mid)
+{
+    if(n == 1)
+    {
+        cout << "move disk 1 from " << from << " to " << end << endl;
+        return;
+    }
+    hanoi(n-1, from, mid, end);
+    cout << "move disk " << n << " from " << from << " to " << end << endl;
+    hanoi(n-1, mid, end, from);
+}
+
 int main(int argc, char* argv[])
 {
     // hello(5);
     // cout << fib(100) << endl;
     // recursiveTriangle(5);
 
-    cout << reverseString("jeremy") << endl;
+    // cout << reverseString("jeremy") << endl;
+
+    int numDiscs = 4;
+    hanoi(numDiscs, "start", "end", "middle");
     return 0;
 }
