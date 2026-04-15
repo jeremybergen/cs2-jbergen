@@ -9,6 +9,7 @@ class Node
     T1 _data;
     Node<T1>* _left;
     Node<T1>* _right;
+    Node<T1>* _parent;
 
     public:
     Node(T1 data, Node<T1>* left = nullptr, Node<T1>* right = nullptr)
@@ -64,13 +65,15 @@ class MyClass
 
 int main(int argc, char* argv[])
 {
-    Tree<MyClass> myTree;
+    Tree<MyClass*> myTree;
     string toBeDeleted;
 
-    myTree.insert(MyClass(42));
-    myTree.insert(MyClass(15));
-    myTree.insert(MyClass(23));
-    myTree.insert(MyClass(-2));
+    // MyClass mc1;
+    // cout << MyClass(42) << endl;
+    myTree.insert(new MyClass(42));
+    myTree.insert(new MyClass(15));
+    myTree.insert(new MyClass(23));
+    myTree.insert(new MyClass(-2));
     // myTree.insert(8);
     // myTree.insert("9000");
     // myTree.insert("69");
