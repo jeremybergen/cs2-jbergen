@@ -1,0 +1,4 @@
+numbers[0]: 42
+numbers[1]: 15
+numbers[2]: 23
+numbers[3]: 9000
