@@ -12,20 +12,20 @@ struct Name
 
 int main(int argc, char * argv[])
 {
-    string inputLine = "0000000000";
-    for(int i = 0; i < inputLine.length(); i++)
-    {
-        // cout << inputLine.at(i) << " " << endl;
-        cout << inputLine.at(i) - '0' << endl;
-        // if(inputLine.at(i) == '0')
-        // {
-        //     cout << 0 << endl;
-        // }
-        // else
-        // {
-        //     cout << 1 << endl;
-        // }
-    }
+    // string inputLine = "0000000000";
+    // for(int i = 0; i < inputLine.length(); i++)
+    // {
+    //     // cout << inputLine.at(i) << " " << endl;
+    //     cout << inputLine.at(i) - '0' << endl;
+    //     // if(inputLine.at(i) == '0')
+    //     // {
+    //     //     cout << 0 << endl;
+    //     // }
+    //     // else
+    //     // {
+    //     //     cout << 1 << endl;
+    //     // }
+    // }
     // int num1;
     // Name* names[10] = {0};
     // // Name* names2 = new Name[10];
