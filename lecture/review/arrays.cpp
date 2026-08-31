@@ -12,6 +12,7 @@ struct Name
 
 int main(int argc, char * argv[])
 {
+    // A new line
     // string inputLine = "0000000000";
     // for(int i = 0; i < inputLine.length(); i++)
     // {
