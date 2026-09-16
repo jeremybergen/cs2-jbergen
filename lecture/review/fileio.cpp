@@ -13,21 +13,29 @@ int main(int argc, char* argv[])
 
     while(getline(fin, inputLine))
     {
-        cout << "DEBUG: inputLine: " << inputLine << endl;
-        istringstream iss;
-        iss.str(inputLine);
-        string token;
-        int column = 0;
-        while(getline(iss, token, ','))
-        {
-            cout << "DEBUG: token: " << token << endl;
-            if(column == 0) cout << "first name" << endl;
-            if(column == 1) cout << "last name" << endl;
-            column++;
-        }
+        // reads up to but not including new line
+        getline(cin, inputLine);
+        cin.ignore(1000, '\n');
+
+        // reads up to and just past whitespace
+        cin >> inputLine;
     }
 
-    fin.close();
+    //     cout << "DEBUG: inputLine: " << inputLine << endl;
+    //     istringstream iss;
+    //     iss.str(inputLine);
+    //     string token;
+    //     int column = 0;
+    //     while(getline(iss, token, ','))
+    //     {
+    //         cout << "DEBUG: token: " << token << endl;
+    //         if(column == 0) cout << "first name" << endl;
+    //         if(column == 1) cout << "last name" << endl;
+    //         column++;
+    //     }
+    // }
+
+    // fin.close();
 
     // int numbers[10];
     // ifstream fin;

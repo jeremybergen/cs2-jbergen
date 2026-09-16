@@ -3,17 +3,28 @@
 
 using namespace std;
 
-class Person
+namespace person
 {
-    protected:
-    string _name;
-    int _id;
+    class Person
+    {
+        protected:
+        string _name;
+        int _id;
+        Person(string, int);
 
-    string getName();
-    int getId();
-    void setName(string);
-    void setId(int);
-};
+        protected:
+        string getName();
+        int getId();
+        void setName(string);
+        void setId(int);
+    };
+}
+
+Person::Person(string name, int id)
+{
+    _name = name;
+    _id = id;
+}
 
 string Person::getName()
 {
