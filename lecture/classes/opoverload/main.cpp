@@ -11,6 +11,7 @@ class Rectangle
     public:
     Rectangle(int side1 = 0, int side2 = 0)
     {
+        // cout << "New rectangle: side1: " << side1 << ", side2: " << side2 << endl;
         _side1 = side1;
         _side2 = side2;
     }
@@ -27,6 +28,18 @@ class Rectangle
 
         newSide1 = _side1 + rhs._side1;
         newSide2 = _side2 + rhs._side2;
+
+        Rectangle toReturn(newSide1, newSide2);
+        return toReturn;
+    }
+
+    Rectangle operator+(int& rhs)
+    {
+        int newSide1;
+        int newSide2;
+
+        newSide1 = _side1 + rhs;
+        newSide2 = _side2 + rhs;
 
         Rectangle toReturn(newSide1, newSide2);
         return toReturn;
@@ -60,6 +73,9 @@ int main(int argc, char* argv[])
     cout << r2 << endl;
 
     Rectangle r3;
+
+    // r3 = r1 + r2;
+    // r3.printVals();
 
     r3 = r1 + r2;
     r3.printVals();
