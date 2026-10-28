@@ -26,5 +26,11 @@ int main(int argc, char* argv[])
     // cout << "DEBUG: inOrder" << endl;
     myTree.inOrder();
 
+    cout << "Enter a number to delete: ";
+    cin >> inData;
+    myTree.remove(inData);
+
+    myTree.inOrder();
+
     return 0;
 }
