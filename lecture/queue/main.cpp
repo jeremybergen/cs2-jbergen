@@ -94,6 +94,7 @@ int Queue::dequeue()
     }
     int toReturn = _queue[_beg];
     _beg++;
+    _beg %= _maxArr;
     _queueSize--;
     if(_queueSize == 0)
     {
