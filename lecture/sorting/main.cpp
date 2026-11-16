@@ -12,16 +12,19 @@ void insertionSort(int[], int);
 void selectionSort(int[], int);
 void mergeSort(int[], int, int, int);
 void merge(int[], int, int, int, int);
+void quickSort(int[], int, int, int);
+int partition(int[], int, int, int);
 void printArray(int[], int);
 
 int main(int argc, char* argv[])
 {
-    int arrSize = 6;
+    int arrSize = 10;
     int numbers[arrSize];
     int bubbleArr[arrSize];
     int insertArr[arrSize];
     int selectArr[arrSize];
     int mergeArr[arrSize];
+    int quickArr[arrSize];
     srand(time(0));
 
     buildArray(numbers, arrSize);
@@ -48,24 +51,63 @@ int main(int argc, char* argv[])
     // end = chrono::system_clock::now();
     // elapsed = end - start;
     // cout << "Selection Sort: " << elapsed.count() << endl;
-    // // cout << boolalpha << verifyArray(bubbleArr, selectArr, arrSize) << endl;
+    // cout << boolalpha << verifyArray(bubbleArr, selectArr, arrSize) << endl;
 
     copyArray(numbers, mergeArr, arrSize);
-    printArray(mergeArr, arrSize);
+    // printArray(mergeArr, arrSize);
     auto start = chrono::system_clock::now();
     mergeSort(mergeArr, arrSize, 0, arrSize-1);
     auto end = chrono::system_clock::now();
     auto elapsed = end - start;
-    cout << "Merge Sort: " << elapsed.count() << endl;
-    printArray(mergeArr, arrSize);
-    cout << boolalpha << verifyArray(bubbleArr, mergeArr, arrSize) << endl;
+    cout << "Merge Sort: \t" << elapsed.count() << endl;
+    // printArray(mergeArr, arrSize);
+    // cout << boolalpha << verifyArray(bubbleArr, mergeArr, arrSize) << endl;
+
+    copyArray(numbers, quickArr, arrSize);
+    printArray(quickArr, arrSize);
+    start = chrono::system_clock::now();
+    quickSort(quickArr, arrSize, 0, arrSize-1);
+    end = chrono::system_clock::now();
+    elapsed = end - start;
+    cout << "Quick Sort: \t" << elapsed.count() << endl;
+    printArray(quickArr, arrSize);
+    cout << boolalpha << verifyArray(mergeArr, quickArr, arrSize) << endl;
 
     return 0;
 }
 
+void quickSort(int numbers[], int arrSize, int beg, int end)
+{
+    if(end < beg) return;
+    int partIdx = partition(numbers, arrSize, beg, end);
+    cout << "DEBUG: partIdx: " << partIdx << endl;
+    quickSort(numbers, arrSize, beg, partIdx - 1);
+    quickSort(numbers, arrSize, partIdx + 1, end);
+}
+int partition(int numbers[], int arrSize, int beg, int end)
+{
+    int pivot = numbers[end];
+    int pivotIdx = end;
+    int i = beg;
+    int j = end - 1;
+    while(i < j)
+    {
+        while(numbers[i] < pivot && i < end) i++;
+        if(i > j) break;
+        while(numbers[j] > pivot && j > beg) j--;
+        if(i < j) swap(numbers[i], numbers[j]);
+    }
+    if(j >= beg && numbers[j] > pivot)
+    {
+        swap(numbers[j], numbers[end]);
+        pivotIdx = j;
+    }
+    return pivotIdx;
+}
+
 void merge(int numbers[], int arrSize, int beg, int mid, int end)
 {
-    cout << "beg: " << beg << ", mid: " << mid << ", end: " << end << endl;
+    // cout << "beg: " << beg << ", mid: " << mid << ", end: " << end << endl;
     int leftSize = mid - beg + 1;
     int rightSize = end - mid;
     int leftArr[leftSize];
@@ -107,7 +149,7 @@ void merge(int numbers[], int arrSize, int beg, int mid, int end)
         numbersMark++;
     }
 
-    for(int i = rightMark; i < leftSize; i++)
+    for(int i = rightMark; i < rightSize; i++)
     {
         numbers[numbersMark] = rightArr[rightMark];
         rightMark++;
@@ -120,6 +162,7 @@ void mergeSort(int numbers[], int arrSize, int beg, int end)
     if(beg >= end) return;
 
     int mid = (beg + end) / 2;
+    // int mid = beg + (end - beg)/2;
     mergeSort(numbers, arrSize, beg, mid);
     mergeSort(numbers, arrSize, mid + 1, end);
     merge(numbers, arrSize, beg, mid, end);
